@@ -7,14 +7,10 @@ from matplotlib import interactive
 interactive(True)
 
 bank = {}
-pacote1 = []
-pacote2 = []
-pacote3 = []
-pacote4 = []
-data = []
 EXT_DATA_STATUS = 0
 KEY_NOT_FOUND = -1
 NPACK = 0
+DELIMITER = ' '
 Fs = 40
 Fs2 = Fs/2
 Fs3 = Fs/20
@@ -34,7 +30,7 @@ for line in lines:
         # Remove \n
         currentLine = line.strip()
         # Divide linha entre os campos separados por espaco
-        splitLine = currentLine.split()
+        splitLine = currentLine.split(DELIMITER)
         # Pega ordem dos dados do campo PX e armazena em dicionario
         # Campo dados no formado "PACOTEX YHz dado1 dado2..."
         if currentLine[0:6] == 'PACOTE':
@@ -135,11 +131,10 @@ for j in range(1, NPACK+1):
                 currentData.data[delta] = bank[j].packData[currentData.positionInPack][i]
 
 # Interpola se achar -20000, a vir
-
-
+a = bank['velDD'].data
+plt.plot(a)
 
 #Interpola para colocar todos os dados na mesma base de tempo
-
 for j in range(1, NPACK+1):
     if len(bank[j].packData) != 0:
         if bank[j].Fs != highestFreq:
@@ -163,14 +158,17 @@ print('Entre com o dado para ser plotado')
 x = input()
 while x != 'end':
 
+    offset = 0
     multiplier = 1
     splitLine = x.split()
     aux = bank.get(splitLine[0], KEY_NOT_FOUND)
     if aux != KEY_NOT_FOUND:
-        if len(splitLine) > 1:
+        if len(splitLine) == 2:
             multiplier = float(splitLine[1])
-        plt.plot(bank['time'], bank[splitLine[0]].data*multiplier, linewidth=0.5)
-    if x == 'figure':
+        elif len(splitLine) == 3:
+            offset = float(splitLine[2])
+        plt.plot(bank['time'], bank[splitLine[0]].data*multiplier+offset, linewidth=0.5)
+    elif x == 'figure':
         plt.figure()
     else:
         print('Dado nao existente')
