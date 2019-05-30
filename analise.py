@@ -64,8 +64,10 @@ lowFreqPack = 0
 highFreqPack = 0
 lowestFreq = 1000
 highestFreq = 0
+# Varre os pacotes para achar a maior/menor frequencia e o respectivo pacote
 for entry in range(1, NPACK+1):
     if len(bank[entry].packData) != 0:
+        # Transpoe vetores de dados para que cada linha corresponda um dado
         bank[entry].packData = (np.array(bank[entry].packData)).T
 
         if bank[entry].Fs < lowestFreq:
@@ -76,9 +78,8 @@ for entry in range(1, NPACK+1):
             highestFreq = bank[entry].Fs
             highFreqPack = entry
 
-
+# Indice do primeiro elemento
 indexFirstElement = np.zeros(NPACK)
-print(bank[lowFreqPack].packData[3])
 firstTimeVal = bank[lowFreqPack].packData[-1][0]
 lastTimeVal = bank[lowFreqPack].packData[-1][-1]
 for entry in range(1, NPACK+1):
@@ -87,30 +88,32 @@ for entry in range(1, NPACK+1):
         # Acha em qual posição do vetor de tempo do pacote 1 esta o primeiro valor de
         # tempo do pacote 3
         indexFirstElement[entry-1] = np.where(bank[entry].packData[-1] == firstTimeVal)[0][0]
-        print(indexFirstElement)
+        # print(indexFirstElement)
 
 indexFirstElement = indexFirstElement.astype(int)
 
 packetLoss = len(bank[highFreqPack].packData[-1])/(bank[highFreqPack].idealTimeArraySize)
 print('Packetloss = ' + str(packetLoss))
 
+# Calcula tamanho ideal para os vetores
 idealTimeArraySize = bank[lowFreqPack].idealTimeArraySize*highestFreq/lowestFreq
 if (idealTimeArraySize % 2) == 1:
     idealTimeArraySize -= 1
-print(idealTimeArraySize)
+print('Tamanho do vetor ideal = ' + str(idealTimeArraySize))
 
 # Cria vetores inicializados com -20000
 for entry in range(1, NPACK+1):
     for i in bank[entry].dataOrder:
+        # ver isso aqui
         bank[entry].idealTimeArraySize = int(idealTimeArraySize/(highestFreq/bank[entry].Fs))
         bank[i].data = -20000*np.ones(bank[entry].idealTimeArraySize)
 
 # Cria vetores com valores de tempo, em segundos
 for entry in range(1, NPACK+1):
     bank[entry].createTimeVector(firstTimeVal, lastTimeVal, highestFreq)
-    print(bank[entry].time)
+    # print(bank[entry].time)
 
-bank['time'] = bank[1].time
+bank['time'] = bank[highFreqPack].time
 
 # Monta vetores novos do pacote 1 e 2 no tempo ideal nas posições
 # correspondentes. Caso não haja perda de pacotes, o resultado é um vetor
@@ -131,10 +134,8 @@ for j in range(1, NPACK+1):
                 currentData.data[delta] = bank[j].packData[currentData.positionInPack][i]
 
 # Interpola se achar -20000, a vir
-a = bank['velDD'].data
-plt.plot(a)
 
-#Interpola para colocar todos os dados na mesma base de tempo
+# Interpola para colocar todos os dados na mesma base de tempo
 for j in range(1, NPACK+1):
     if len(bank[j].packData) != 0:
         if bank[j].Fs != highestFreq:
