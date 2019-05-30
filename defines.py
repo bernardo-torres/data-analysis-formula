@@ -70,3 +70,5 @@ dic1 = {
 baseString = 'ind acelX acelY acelZ velDD velT sparkCut suspPos time'
 baseString += ' oleoP fuelP tps rearBrakeP frontBrakeP volPos beacon correnteBat'
 baseString += ' ect batVoltage releBomba releVent pduTemp tempDiscoD tempDiscoE'
+
+print('Versão ---- beta 0.1 ---- 30/05')

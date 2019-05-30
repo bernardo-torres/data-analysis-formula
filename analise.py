@@ -5,6 +5,8 @@ import easygui
 from defines import*
 from matplotlib import interactive
 interactive(True)
+from mpldatacursor import datacursor
+
 
 bank = {}
 EXT_DATA_STATUS = 0
@@ -169,12 +171,14 @@ while x != 'end':
         elif len(splitLine) == 3:
             offset = float(splitLine[2])
         plt.plot(bank['time'], bank[splitLine[0]].data*multiplier+offset, linewidth=0.5)
+        plt.xlabel('Tempo (s)')
+        datacursor(bbox=None, draggable=True, display='multiple')
     elif x == 'figure':
         plt.figure()
     else:
         print('Dado nao existente')
 
-    print('Entre com o dado para ser plotado. Digite figure para abrir uma figura nova')
+    print('Entre com o dado para ser plotado. Digite figure para abrir uma figura nova. End para encerrar.')
     x = input()
 
 
