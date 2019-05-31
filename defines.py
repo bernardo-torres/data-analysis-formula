@@ -67,8 +67,29 @@ dic1 = {
     'tempDiscoE': [mult, 1, 0]
 }
 
+
+def linearInterp(vector, value, size):
+    cnt = 0
+    for i in range(0, size):
+        if vector.data[i] == value:
+            cnt = cnt + 1
+        elif cnt != 0:
+            delta = vector.data[i] - vector.data[i-cnt-1]
+            dv = delta/(cnt+1)
+            k = 1
+            for j in range(i-cnt, i):
+                vector.data[j] = vector.data[i-cnt-1] + dv*k
+                k = k + 1
+            cnt = 0
+    return vector
+
+
 baseString = 'ind acelX acelY acelZ velDD velT sparkCut suspPos time'
 baseString += ' oleoP fuelP tps rearBrakeP frontBrakeP volPos beacon correnteBat'
 baseString += ' ect batVoltage releBomba releVent pduTemp tempDiscoD tempDiscoE'
 
 print('Versão ---- beta 0.1 ---- 30/05')
+print('Mudancas:')
+print('Clique no grafico para exibir os valores de um ponto especifico')
+print('Para retirar esse marcador, clique em cima com botao direito')
+print('Agora interpolando perda de pacotes')

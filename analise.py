@@ -135,8 +135,17 @@ for j in range(1, NPACK+1):
                 currentData = bank[entry]
                 currentData.data[delta] = bank[j].packData[currentData.positionInPack][i]
 
-# Interpola se achar -20000, a vir
 
+#plt.plot(bank[3].time, bank['ect'].data)
+
+
+# Interpola se achar -20000
+if packetLoss < 1:
+    for entry in range(1, NPACK+1):
+        for dta in bank[entry].dataOrder:
+            bank[dta] = linearInterp(bank[dta], -20000, bank[entry].idealTimeArraySize)
+
+#plt.plot(bank[3].time, bank['ect'].data)
 # Interpola para colocar todos os dados na mesma base de tempo
 for j in range(1, NPACK+1):
     if len(bank[j].packData) != 0:
