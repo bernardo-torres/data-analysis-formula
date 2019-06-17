@@ -55,7 +55,7 @@ dic1 = {
     'tps': [mult, 0.1, 0],
     'rearBrakeP': [mult, 0.02535, 5.2],
     'frontBrakeP': [mult, 0.02535, 5.9],
-    'volPos': [lin, volMAX, volMIN, -240, 120],
+    'volPos': [lin, volMIN, volMAX, -240, 120],
     'beacon': [mult, 1, 0],
     'correnteBat': [mult, 0.014652, 29.3],
     'ect': [mult, 0.1, 0],
@@ -88,8 +88,9 @@ baseString = 'ind acelX acelY acelZ velDD velT sparkCut suspPos time'
 baseString += ' oleoP fuelP tps rearBrakeP frontBrakeP volPos beacon correnteBat'
 baseString += ' ect batVoltage releBomba releVent pduTemp tempDiscoD tempDiscoE'
 
-print('Versão ---- beta 0.1 ---- 30/05')
+print('Versão ---- beta 0.2 ---- 31/05')
 print('Mudancas:')
 print('Clique no grafico para exibir os valores de um ponto especifico')
 print('Para retirar esse marcador, clique em cima com botao direito')
 print('Agora interpolando perda de pacotes')
+print('Nova interface')

@@ -49,6 +49,11 @@ for line in lines:
                 bank[x] = dataType(packNo, index, 0, Fs)
 
             NPACK = int(packNo)
+        elif currentLine[0:26] == 'POSICAO MAXIMA DO VOLANTE:':
+            dic1['volPos'][1] = int(splitLine[4])
+        elif currentLine[0:26] == 'POSICAO MINIMA DO VOLANTE:':
+            dic1['volPos'][2] = int(splitLine[4])
+
         # Analisa linha por linha e divide conforme pacotes
         # Caso o primeiro caractere da linha seja um decimal
         if currentLine[0].isdecimal() == 1:
@@ -60,8 +65,7 @@ for line in lines:
                 aux = [int(x) for x in splitLine[1: len(splitLine)]]
                 # Adiciona lista com valores da linha
                 bank[currentPackNo].packData.append(aux)
-
-
+#print(dic1['volPos'])
 lowFreqPack = 0
 highFreqPack = 0
 lowestFreq = 1000
@@ -145,7 +149,7 @@ if packetLoss < 1:
         for dta in bank[entry].dataOrder:
             bank[dta] = linearInterp(bank[dta], -20000, bank[entry].idealTimeArraySize)
 
-#plt.plot(bank[3].time, bank['ect'].data)
+
 # Interpola para colocar todos os dados na mesma base de tempo
 for j in range(1, NPACK+1):
     if len(bank[j].packData) != 0:
@@ -154,6 +158,8 @@ for j in range(1, NPACK+1):
             for entry in pack2list:
                 currentData = bank[entry]
                 currentData.data = np.interp(bank['time'], bank[j].time, currentData.data)
+
+#plt.plot(bank[1].time, bank['volPos'].data)
 
 # Aplica funcoes
 for i in dic1:
@@ -166,12 +172,12 @@ for i in dic1:
 
 #plt.plot(bank[1].time, bank['volPos'].data,bank['time'].data, bank['acelY'].data*100, linewidth=0.5)
 
+offset = 0
+multiplier = 1
 print('Entre com o dado para ser plotado')
-x = input()
+# x = input()
+x = 'end'
 while x != 'end':
-
-    offset = 0
-    multiplier = 1
     splitLine = x.split()
     aux = bank.get(splitLine[0], KEY_NOT_FOUND)
     if aux != KEY_NOT_FOUND:
@@ -190,7 +196,25 @@ while x != 'end':
     print('Entre com o dado para ser plotado. Digite figure para abrir uma figura nova. End para encerrar.')
     x = input()
 
-
-
-#plt.plot(bank['time'], bank['ect'].data)
-#plt.show()
+choices = ['Nova figura']
+choice = 0
+for i in range(1, NPACK+1):
+    choices.extend(bank[i].dataOrder)
+msg = ""
+title = "Programa para análise dos dados -- V: beta0.2"
+fieldNames = ["Multiplicador", "Offset"]
+initfieldValues = [1, 0]
+while choice != 'end':
+    msg = "Escolha o dado para ser plotado"
+    choice = easygui.choicebox(msg, title, choices)
+    if choice == None:
+        break
+    elif choice == 'Nova figura':
+        plt.figure()
+    else:
+        fieldValues = easygui.multenterbox(msg, title, fieldNames, initfieldValues)
+        offset = int(fieldValues[1])
+        multiplier = int(fieldValues[0])
+        plt.plot(bank['time'], bank[choice].data*multiplier+offset, linewidth=0.5)
+        plt.xlabel('Tempo (s)')
+        datacursor(bbox=None, draggable=True, display='multiple')
