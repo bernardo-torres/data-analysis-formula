@@ -21,10 +21,11 @@ class pacotes():
         self.packData = []
         self.idealTimeArraySize = 0
         self.time = 0
+        self.loss = 0
 
     def calcTimeArraySize(self, highestFreq):
-        a = self.packData[-1][-1] - self.packData[-1][0] + 1
-        self.idealTimeArraySize = int(a/(highestFreq/self.Fs))
+        a = self.packData[-1][-1] - self.packData[-1][0]
+        self.idealTimeArraySize = int(a/(highestFreq/self.Fs)) + 1
         return a
 
     def createTimeVector(self, first, last, highestFreq):

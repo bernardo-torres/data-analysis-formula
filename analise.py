@@ -98,11 +98,13 @@ for entry in range(1, NPACK+1):
 
 indexFirstElement = indexFirstElement.astype(int)
 
-packetLoss = len(bank[highFreqPack].packData[-1])/(bank[highFreqPack].idealTimeArraySize)
-print('Packetloss = ' + str(packetLoss))
+for entry in range(1, NPACK+1):
+    bank[entry].loss = len(bank[entry].packData[-1])/(bank[entry].idealTimeArraySize)
+    #print(str(len(bank[entry].packData[-1])) + ' ' + str(bank[entry].idealTimeArraySize))
+    print('Perda pacote ' + str(entry) + ' = ' + str(bank[entry].loss))
 
 # Calcula tamanho ideal para os vetores
-idealTimeArraySize = bank[lowFreqPack].idealTimeArraySize*highestFreq/lowestFreq
+idealTimeArraySize = (bank[lowFreqPack].idealTimeArraySize-1)*highestFreq/lowestFreq
 if (idealTimeArraySize % 2) == 1:
     idealTimeArraySize -= 1
 print('Tamanho do vetor ideal = ' + str(idealTimeArraySize))
@@ -113,11 +115,12 @@ for entry in range(1, NPACK+1):
         # ver isso aqui
         bank[entry].idealTimeArraySize = int(idealTimeArraySize/(highestFreq/bank[entry].Fs))
         bank[i].data = -20000*np.ones(bank[entry].idealTimeArraySize)
-
+    print(bank[entry].idealTimeArraySize)
 # Cria vetores com valores de tempo, em segundos
 for entry in range(1, NPACK+1):
     bank[entry].createTimeVector(firstTimeVal, lastTimeVal, highestFreq)
     # print(bank[entry].time)
+    print(len(bank[entry].time))
 
 bank['time'] = bank[highFreqPack].time
 
@@ -130,6 +133,8 @@ for j in range(1, NPACK+1):
     for i in range(indexFirstElement[j-1], indexFirstElement[j-1] + bank[j].idealTimeArraySize):
         if len(bank[j].packData) != 0:
             # Caso chegou no fim do array antes de chegar em idealTimeArraySize
+            if i == len(bank[j].packData[-1]):
+                break
             delta = (bank[j].packData[-1][i] - firstTimeVal)/(highestFreq/bank[j].Fs)
             delta = int(delta)
             if delta == bank[j].idealTimeArraySize:
@@ -140,12 +145,12 @@ for j in range(1, NPACK+1):
                 currentData.data[delta] = bank[j].packData[currentData.positionInPack][i]
 
 
-#plt.plot(bank[3].time, bank['ect'].data)
+plt.plot(bank[2].time, bank['rpm'].data)
 
 
 # Interpola se achar -20000
-if packetLoss < 1:
-    for entry in range(1, NPACK+1):
+for entry in range(1, NPACK+1):
+    if bank[entry].loss != 1:
         for dta in bank[entry].dataOrder:
             bank[dta] = linearInterp(bank[dta], -20000, bank[entry].idealTimeArraySize)
 
