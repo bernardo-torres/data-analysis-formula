@@ -218,8 +218,8 @@ while choice != 'end':
         plt.figure()
     else:
         fieldValues = easygui.multenterbox(msg, title, fieldNames, initfieldValues)
-        offset = int(fieldValues[1])
-        multiplier = int(fieldValues[0])
+        offset = float(fieldValues[1])
+        multiplier = float(fieldValues[0])
         plt.plot(bank['time'], bank[choice].data*multiplier+offset, linewidth=0.5)
         plt.xlabel('Tempo (s)')
         datacursor(bbox=None, draggable=True, display='multiple')
