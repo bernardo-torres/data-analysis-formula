@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>907</width>
+    <height>856</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="MPLWidget" name="widget" native="true">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>100</y>
+      <width>641</width>
+      <height>261</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QListWidget" name="listWidget">
+    <property name="geometry">
+     <rect>
+      <x>90</x>
+      <y>20</y>
+      <width>131</width>
+      <height>541</height>
+     </rect>
+    </property>
+    <property name="dragEnabled">
+     <bool>true</bool>
+    </property>
+    <property name="dragDropMode">
+     <enum>QAbstractItemView::InternalMove</enum>
+    </property>
+    <property name="alternatingRowColors">
+     <bool>true</bool>
+    </property>
+   </widget>
+   <widget class="QSplitter" name="splitter">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>30</y>
+      <width>80</width>
+      <height>511</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Vertical</enum>
+    </property>
+    <widget class="QCheckBox" name="acelX">
+     <property name="text">
+      <string>acelX</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="acelY">
+     <property name="text">
+      <string>acelY</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="acelZ">
+     <property name="text">
+      <string>acelZ</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="velDD">
+     <property name="text">
+      <string>velDD</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="velT">
+     <property name="text">
+      <string>velT</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="sparkCut">
+     <property name="text">
+      <string>sparkCut</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="suspPos">
+     <property name="text">
+      <string>suspPos</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="oleoP">
+     <property name="text">
+      <string>oleoP</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="fuelP">
+     <property name="text">
+      <string>fuelP</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="tps">
+     <property name="text">
+      <string>tps</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="rearBrakeP">
+     <property name="text">
+      <string>rearBrakeP</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="frontBrakeP">
+     <property name="text">
+      <string>frontBrakeP</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="volPos">
+     <property name="text">
+      <string>volPos</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="beacon">
+     <property name="text">
+      <string>beacon</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="correnteBat">
+     <property name="text">
+      <string>correnteBat</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="ect">
+     <property name="text">
+      <string>ect</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="batVoltage">
+     <property name="text">
+      <string>batVoltage</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="releBomba">
+     <property name="text">
+      <string>releBomba</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="releVent">
+     <property name="text">
+      <string>releVent</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="pduTemp">
+     <property name="text">
+      <string>pduTemp</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="tempDiscoD">
+     <property name="text">
+      <string>tempDiscoD</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="tempDiscoE">
+     <property name="text">
+      <string>tempDiscoE</string>
+     </property>
+    </widget>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>907</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionOpenFile"/>
+   </widget>
+   <addaction name="menuFile"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionOpenFile">
+   <property name="text">
+    <string>Open</string>
+   </property>
+  </action>
+ </widget>
+ <customwidgets>
+  <customwidget>
+   <class>MPLWidget</class>
+   <extends>QWidget</extends>
+   <header>mplwidget.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

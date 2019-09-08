@@ -5,6 +5,7 @@ volMIN = 345
 suspMAX = 4000
 suspMIN = 0
 
+
 class dataType():
     def __init__(self, packNo, positionInPack, data, Fs):
         self.positionInPack = positionInPack

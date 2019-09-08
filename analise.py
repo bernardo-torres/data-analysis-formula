@@ -1,11 +1,44 @@
 
+# Modulos
 import matplotlib.pyplot as plt
 from scipy import signal
-import easygui
-from defines import*
 from matplotlib import interactive
-interactive(True)
 from mpldatacursor import datacursor
+import sys
+import pyqtgraph as pg
+import random
+from matplotlib.backends.backend_qt5agg import (NavigationToolbar2QT as NavigationToolbar)
+
+
+# Arquivos
+from defines import*
+from guiGenerated import *
+
+# Qt
+from PyQt5 import QtCore, QtWidgets
+# from PyQt5 import QFileDialog
+
+interactive(True)
+
+
+def selectFile():
+    fileName, _ = QtWidgets.QFileDialog.getOpenFileName(MainWindow, "Escolha arquivo .txt",
+                                                        "", "All Files (*);;Text Files (*.txt)")
+    return fileName
+
+
+def listClicked(item):
+    # QMessageBox.information(self, "ListWidget", "You clicked: "+item.text())
+    ui.widget.mplPlot(bank[highFreqPack].time, bank[item.text()].data)
+    print(item.text())
+
+
+# Roda janela
+app = QtWidgets.QApplication(sys.argv)
+app.setStyle("fusion")
+MainWindow = QtWidgets.QMainWindow()
+ui = Ui_MainWindow()
+ui.setupUi(MainWindow)
 
 
 bank = {}
@@ -21,8 +54,9 @@ T2 = 1/Fs2
 T3 = 1/Fs3
 
 # Abre arquivo
-file_path = r'C:\Users\befto\Dropbox\Python\SkidPad_11_9__Pedico_2.txt'
-file_path = easygui.fileopenbox()
+file_path = r'C:\Users\Be\github\DataAnalysisFormula\SkidPad_11_9__Pedico_2.txt'
+file_path = selectFile()
+
 with open(file_path) as file_object:
     # Salva arquivo na lista lines
     lines = file_object.readlines()
@@ -84,6 +118,7 @@ for entry in range(1, NPACK+1):
             highestFreq = bank[entry].Fs
             highFreqPack = entry
 
+
 # Indice do primeiro elemento
 indexFirstElement = np.zeros(NPACK)
 firstTimeVal = bank[lowFreqPack].packData[-1][0]
@@ -98,10 +133,13 @@ for entry in range(1, NPACK+1):
 
 indexFirstElement = indexFirstElement.astype(int)
 
+print(bank[4].packData)
 for entry in range(1, NPACK+1):
-    bank[entry].loss = len(bank[entry].packData[-1])/(bank[entry].idealTimeArraySize)
-    #print(str(len(bank[entry].packData[-1])) + ' ' + str(bank[entry].idealTimeArraySize))
-    print('Perda pacote ' + str(entry) + ' = ' + str(bank[entry].loss))
+    if len(bank[entry].packData) != 0:
+        bank[entry].loss = len(bank[entry].packData[-1])/(bank[entry].idealTimeArraySize)
+        #print(str(len(bank[entry].packData[-1])) + ' ' + str(bank[entry].idealTimeArraySize))
+        print('Perda pacote ' + str(entry) + ' = ' + str(bank[entry].loss))
+
 
 # Calcula tamanho ideal para os vetores
 idealTimeArraySize = (bank[lowFreqPack].idealTimeArraySize-1)*highestFreq/lowestFreq
@@ -145,7 +183,7 @@ for j in range(1, NPACK+1):
                 currentData.data[delta] = bank[j].packData[currentData.positionInPack][i]
 
 
-plt.plot(bank[2].time, bank['rpm'].data)
+#plt.plot(bank[2].time, bank['rpm'].data)
 
 
 # Interpola se achar -20000
@@ -164,7 +202,6 @@ for j in range(1, NPACK+1):
                 currentData = bank[entry]
                 currentData.data = np.interp(bank['time'], bank[j].time, currentData.data)
 
-#plt.plot(bank[1].time, bank['volPos'].data)
 
 # Aplica funcoes
 for i in dic1:
@@ -209,17 +246,17 @@ msg = ""
 title = "Programa para análise dos dados -- V: beta0.2"
 fieldNames = ["Multiplicador", "Offset"]
 initfieldValues = [1, 0]
-while choice != 'end':
-    msg = "Escolha o dado para ser plotado"
-    choice = easygui.choicebox(msg, title, choices)
-    if choice == None:
-        break
-    elif choice == 'Nova figura':
-        plt.figure()
-    else:
-        fieldValues = easygui.multenterbox(msg, title, fieldNames, initfieldValues)
-        offset = float(fieldValues[1])
-        multiplier = float(fieldValues[0])
-        plt.plot(bank['time'], bank[choice].data*multiplier+offset, linewidth=0.5)
-        plt.xlabel('Tempo (s)')
-        datacursor(bbox=None, draggable=True, display='multiple')
+
+# MainWindow.toolbar = NavigationToolbar(ui.widget.canvas, MainWindow, coordinates=True)
+# MainWindow.addToolBar(MainWindow.toolbar)
+
+ui.actionOpenFile.triggered.connect(selectFile)
+ui.listWidget.itemClicked.connect(listClicked)
+
+for i in dic1:
+    aux = bank.get(i, KEY_NOT_FOUND)
+    if aux != KEY_NOT_FOUND:
+        ui.listWidget.addItem(i)
+
+MainWindow.show()
+sys.exit(app.exec_())
