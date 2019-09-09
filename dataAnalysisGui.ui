@@ -6,32 +6,41 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>907</width>
-    <height>856</height>
+    <width>1022</width>
+    <height>592</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Análise de Dados - Formula UFMG</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <widget class="MPLWidget" name="widget" native="true">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
     <property name="geometry">
      <rect>
-      <x>240</x>
-      <y>100</y>
-      <width>641</width>
-      <height>261</height>
+      <x>210</x>
+      <y>50</y>
+      <width>811</width>
+      <height>471</height>
      </rect>
+    </property>
+    <property name="toolTipDuration">
+     <number>-4</number>
     </property>
    </widget>
    <widget class="QListWidget" name="listWidget">
     <property name="geometry">
      <rect>
-      <x>90</x>
-      <y>20</y>
+      <x>40</x>
+      <y>50</y>
       <width>131</width>
-      <height>541</height>
+      <height>341</height>
      </rect>
+    </property>
+    <property name="editTriggers">
+     <set>QAbstractItemView::DoubleClicked</set>
     </property>
     <property name="dragEnabled">
      <bool>true</bool>
@@ -43,128 +52,170 @@
      <bool>true</bool>
     </property>
    </widget>
-   <widget class="QSplitter" name="splitter">
+   <widget class="QPushButton" name="clearPlotButton">
+    <property name="geometry">
+     <rect>
+      <x>900</x>
+      <y>10</y>
+      <width>101</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Limpar Figura</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="multiplierLineEdit">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>250</x>
+      <y>20</y>
+      <width>51</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>1</string>
+    </property>
+    <property name="clearButtonEnabled">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>250</x>
+      <y>0</y>
+      <width>61</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Multiplicador</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>330</x>
+      <y>0</y>
+      <width>61</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Offset</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="offsetLineEdit">
+    <property name="geometry">
+     <rect>
+      <x>320</x>
+      <y>20</y>
+      <width>51</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>0</string>
+    </property>
+    <property name="clearButtonEnabled">
+     <bool>false</bool>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="resetButton">
+    <property name="geometry">
+     <rect>
+      <x>380</x>
+      <y>20</y>
+      <width>71</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Reset</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_3">
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>30</y>
-      <width>80</width>
-      <height>511</height>
+      <y>430</y>
+      <width>141</width>
+      <height>16</height>
      </rect>
     </property>
-    <property name="orientation">
-     <enum>Qt::Vertical</enum>
+    <property name="text">
+     <string>Pacotes recebidos: </string>
     </property>
-    <widget class="QCheckBox" name="acelX">
-     <property name="text">
-      <string>acelX</string>
-     </property>
-    </widget>
-    <widget class="QCheckBox" name="acelY">
-     <property name="text">
-      <string>acelY</string>
-     </property>
-    </widget>
-    <widget class="QCheckBox" name="acelZ">
-     <property name="text">
-      <string>acelZ</string>
-     </property>
-    </widget>
-    <widget class="QCheckBox" name="velDD">
-     <property name="text">
-      <string>velDD</string>
-     </property>
-    </widget>
-    <widget class="QCheckBox" name="velT">
-     <property name="text">
-      <string>velT</string>
-     </property>
-    </widget>
-    <widget class="QCheckBox" name="sparkCut">
-     <property name="text">
-      <string>sparkCut</string>
-     </property>
-    </widget>
-    <widget class="QCheckBox" name="suspPos">
-     <property name="text">
-      <string>suspPos</string>
-     </property>
-    </widget>
-    <widget class="QCheckBox" name="oleoP">
-     <property name="text">
-      <string>oleoP</string>
-     </property>
-    </widget>
-    <widget class="QCheckBox" name="fuelP">
-     <property name="text">
-      <string>fuelP</string>
-     </property>
-    </widget>
-    <widget class="QCheckBox" name="tps">
-     <property name="text">
-      <string>tps</string>
-     </property>
-    </widget>
-    <widget class="QCheckBox" name="rearBrakeP">
-     <property name="text">
-      <string>rearBrakeP</string>
-     </property>
-    </widget>
-    <widget class="QCheckBox" name="frontBrakeP">
-     <property name="text">
-      <string>frontBrakeP</string>
-     </property>
-    </widget>
-    <widget class="QCheckBox" name="volPos">
-     <property name="text">
-      <string>volPos</string>
-     </property>
-    </widget>
-    <widget class="QCheckBox" name="beacon">
-     <property name="text">
-      <string>beacon</string>
-     </property>
-    </widget>
-    <widget class="QCheckBox" name="correnteBat">
-     <property name="text">
-      <string>correnteBat</string>
-     </property>
-    </widget>
-    <widget class="QCheckBox" name="ect">
-     <property name="text">
-      <string>ect</string>
-     </property>
-    </widget>
-    <widget class="QCheckBox" name="batVoltage">
-     <property name="text">
-      <string>batVoltage</string>
-     </property>
-    </widget>
-    <widget class="QCheckBox" name="releBomba">
-     <property name="text">
-      <string>releBomba</string>
-     </property>
-    </widget>
-    <widget class="QCheckBox" name="releVent">
-     <property name="text">
-      <string>releVent</string>
-     </property>
-    </widget>
-    <widget class="QCheckBox" name="pduTemp">
-     <property name="text">
-      <string>pduTemp</string>
-     </property>
-    </widget>
-    <widget class="QCheckBox" name="tempDiscoD">
-     <property name="text">
-      <string>tempDiscoD</string>
-     </property>
-    </widget>
-    <widget class="QCheckBox" name="tempDiscoE">
-     <property name="text">
-      <string>tempDiscoE</string>
-     </property>
-    </widget>
+   </widget>
+   <widget class="QLabel" name="label_4">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>500</y>
+      <width>141</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Número de pontos:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_5">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>520</y>
+      <width>141</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Tempo decorrido:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_6">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>450</y>
+      <width>141</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Pacote 1:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_7">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>465</y>
+      <width>131</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Pacote 2:</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_8">
+    <property name="geometry">
+     <rect>
+      <x>40</x>
+      <y>480</y>
+      <width>131</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Pacote 3:</string>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -172,22 +223,58 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>907</width>
+     <width>1022</width>
      <height>21</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
     <property name="title">
-     <string>File</string>
+     <string>Arquivo</string>
     </property>
     <addaction name="actionOpenFile"/>
    </widget>
+   <widget class="QMenu" name="menuHep">
+    <property name="title">
+     <string>Ajuda</string>
+    </property>
+    <addaction name="actionComo_utilizar"/>
+   </widget>
+   <widget class="QMenu" name="menuFigure">
+    <property name="title">
+     <string>Figura</string>
+    </property>
+    <addaction name="actionTitulo"/>
+    <addaction name="actionEixo_X"/>
+    <addaction name="actionEixo_Y"/>
+   </widget>
    <addaction name="menuFile"/>
+   <addaction name="menuFigure"/>
+   <addaction name="menuHep"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionOpenFile">
    <property name="text">
-    <string>Open</string>
+    <string>Abrir</string>
+   </property>
+  </action>
+  <action name="actionComo_utilizar">
+   <property name="text">
+    <string>Como utilizar</string>
+   </property>
+  </action>
+  <action name="actionTitulo">
+   <property name="text">
+    <string>Titulo</string>
+   </property>
+  </action>
+  <action name="actionEixo_X">
+   <property name="text">
+    <string>Eixo X</string>
+   </property>
+  </action>
+  <action name="actionEixo_Y">
+   <property name="text">
+    <string>Eixo Y</string>
    </property>
   </action>
  </widget>
