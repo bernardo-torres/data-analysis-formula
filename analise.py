@@ -1,8 +1,6 @@
 
 # Modulos
 import matplotlib.pyplot as plt
-from matplotlib import interactive
-from mpldatacursor import datacursor
 import sys
 from matplotlib.backends.backend_qt5agg import (NavigationToolbar2QT as NavigationToolbar)
 
@@ -14,9 +12,6 @@ from guiGenerated import *
 # Qt
 from PyQt5 import QtCore, QtWidgets
 # from PyQt5 import QFileDialog
-
-interactive(True)
-
 
 def selectFile():
     fileName, _ = QtWidgets.QFileDialog.getOpenFileName(MainWindow, "Escolha arquivo .txt",
@@ -33,7 +28,7 @@ def listClicked(item):
     # QMessageBox.information(self, "ListWidget", "You clicked: "+item.text())
     mult = float(ui.multiplierLineEdit.text())
     offset = float(ui.offsetLineEdit.text())
-    ui.widget.mplPlot(bank[highFreqPack].time, bank[item.text()].data * mult + offset)
+    ui.widget.mplPlot(bank[highFreqPack].time, bank[item.text()].data * mult + offset, item.text())
     print(item.text())
 
 
@@ -53,16 +48,19 @@ def showDialog():
 
 def plotSetTitle():
     title = showDialog()
-    print(title)
+    # print(title)
     ui.widget.mplSetTitle(title)
+
 
 def plotSetX():
     title = showDialog()
     ui.widget.mplSetXLabel(title)
 
+
 def plotSetY():
     title = showDialog()
     ui.widget.mplSetYLabel(title)
+
 
 # Roda janela
 app = QtWidgets.QApplication(sys.argv)

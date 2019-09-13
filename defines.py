@@ -69,6 +69,7 @@ dic1 = {
     'tempDiscoE': [mult, 1, 0]
 }
 
+
 # Funcao que interpola linearmente um array entre dois pontos
 def linearInterp(vector, value, size):
     cnt = 0
@@ -90,7 +91,7 @@ baseString = 'ind acelX acelY acelZ velDD velT sparkCut suspPos time'
 baseString += ' oleoP fuelP tps rearBrakeP frontBrakeP volPos beacon correnteBat'
 baseString += ' ect batVoltage releBomba releVent pduTemp tempDiscoD tempDiscoE'
 
-print('Versão atual ---- beta 0.3 ---- 07/19')
+print('Versão atual ----  1.0 ---- 09/09/19')
 print('Ultimas Mudancas:')
 print('beta 0.2 -- 31/05')
 print('Clique no grafico para exibir os valores de um ponto especifico')
@@ -101,3 +102,5 @@ print('Nova interface')
 print('beta 0.3')
 print('Possivel adicionar multiplier e offset com decimais (utiliza-de . e nao ,)')
 print('Pegando max e min da posicao da suspensao por meio do txt')
+print('1.0')
+print('Nova interface usando Pyqt5')

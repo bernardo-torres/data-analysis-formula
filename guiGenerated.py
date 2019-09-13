@@ -9,6 +9,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from mplwidget import MPLWidget
 
+
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -17,11 +18,11 @@ class Ui_MainWindow(object):
         self.centralwidget.setObjectName("centralwidget")
         self.widget = MPLWidget(self.centralwidget)
         self.widget.setEnabled(True)
-        self.widget.setGeometry(QtCore.QRect(210, 50, 811, 471))
+        self.widget.setGeometry(QtCore.QRect(180, 50, 841, 521))
         self.widget.setToolTipDuration(-4)
         self.widget.setObjectName("widget")
         self.listWidget = QtWidgets.QListWidget(self.centralwidget)
-        self.listWidget.setGeometry(QtCore.QRect(40, 50, 131, 341))
+        self.listWidget.setGeometry(QtCore.QRect(20, 50, 131, 341))
         self.listWidget.setEditTriggers(QtWidgets.QAbstractItemView.DoubleClicked)
         self.listWidget.setDragEnabled(True)
         self.listWidget.setDragDropMode(QtWidgets.QAbstractItemView.InternalMove)
@@ -54,9 +55,6 @@ class Ui_MainWindow(object):
         self.label_4 = QtWidgets.QLabel(self.centralwidget)
         self.label_4.setGeometry(QtCore.QRect(20, 500, 141, 16))
         self.label_4.setObjectName("label_4")
-        self.label_5 = QtWidgets.QLabel(self.centralwidget)
-        self.label_5.setGeometry(QtCore.QRect(20, 520, 141, 16))
-        self.label_5.setObjectName("label_5")
         self.label_6 = QtWidgets.QLabel(self.centralwidget)
         self.label_6.setGeometry(QtCore.QRect(40, 450, 141, 16))
         self.label_6.setObjectName("label_6")
@@ -66,14 +64,18 @@ class Ui_MainWindow(object):
         self.label_8 = QtWidgets.QLabel(self.centralwidget)
         self.label_8.setGeometry(QtCore.QRect(40, 480, 131, 16))
         self.label_8.setObjectName("label_8")
+        self.label_5 = QtWidgets.QLabel(self.centralwidget)
+        self.label_5.setGeometry(QtCore.QRect(10, 0, 231, 16))
+        self.label_5.setObjectName("label_5")
+        self.label_9 = QtWidgets.QLabel(self.centralwidget)
+        self.label_9.setGeometry(QtCore.QRect(10, 20, 231, 16))
+        self.label_9.setObjectName("label_9")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 1022, 21))
         self.menubar.setObjectName("menubar")
         self.menuFile = QtWidgets.QMenu(self.menubar)
         self.menuFile.setObjectName("menuFile")
-        self.menuHep = QtWidgets.QMenu(self.menubar)
-        self.menuHep.setObjectName("menuHep")
         self.menuFigure = QtWidgets.QMenu(self.menubar)
         self.menuFigure.setObjectName("menuFigure")
         MainWindow.setMenuBar(self.menubar)
@@ -91,13 +93,11 @@ class Ui_MainWindow(object):
         self.actionEixo_Y = QtWidgets.QAction(MainWindow)
         self.actionEixo_Y.setObjectName("actionEixo_Y")
         self.menuFile.addAction(self.actionOpenFile)
-        self.menuHep.addAction(self.actionComo_utilizar)
         self.menuFigure.addAction(self.actionTitulo)
         self.menuFigure.addAction(self.actionEixo_X)
         self.menuFigure.addAction(self.actionEixo_Y)
         self.menubar.addAction(self.menuFile.menuAction())
         self.menubar.addAction(self.menuFigure.menuAction())
-        self.menubar.addAction(self.menuHep.menuAction())
 
         self.retranslateUi(MainWindow)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
@@ -113,19 +113,18 @@ class Ui_MainWindow(object):
         self.resetButton.setText(_translate("MainWindow", "Reset"))
         self.label_3.setText(_translate("MainWindow", "Pacotes recebidos: "))
         self.label_4.setText(_translate("MainWindow", "Número de pontos:"))
-        self.label_5.setText(_translate("MainWindow", "Tempo decorrido:"))
         self.label_6.setText(_translate("MainWindow", "Pacote 1:"))
         self.label_7.setText(_translate("MainWindow", "Pacote 2:"))
         self.label_8.setText(_translate("MainWindow", "Pacote 3:"))
+        self.label_5.setText(_translate("MainWindow", "Clique duas vezes para plotar"))
+        self.label_9.setText(_translate("MainWindow", "Clique duas vezes novamente para remover"))
         self.menuFile.setTitle(_translate("MainWindow", "Arquivo"))
-        self.menuHep.setTitle(_translate("MainWindow", "Ajuda"))
         self.menuFigure.setTitle(_translate("MainWindow", "Figura"))
         self.actionOpenFile.setText(_translate("MainWindow", "Abrir"))
         self.actionComo_utilizar.setText(_translate("MainWindow", "Como utilizar"))
         self.actionTitulo.setText(_translate("MainWindow", "Titulo"))
         self.actionEixo_X.setText(_translate("MainWindow", "Eixo X"))
         self.actionEixo_Y.setText(_translate("MainWindow", "Eixo Y"))
-
 
 
 if __name__ == "__main__":

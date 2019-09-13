@@ -20,10 +20,10 @@
     </property>
     <property name="geometry">
      <rect>
-      <x>210</x>
+      <x>180</x>
       <y>50</y>
-      <width>811</width>
-      <height>471</height>
+      <width>841</width>
+      <height>521</height>
      </rect>
     </property>
     <property name="toolTipDuration">
@@ -33,7 +33,7 @@
    <widget class="QListWidget" name="listWidget">
     <property name="geometry">
      <rect>
-      <x>40</x>
+      <x>20</x>
       <y>50</y>
       <width>131</width>
       <height>341</height>
@@ -165,19 +165,6 @@
      <string>Número de pontos:</string>
     </property>
    </widget>
-   <widget class="QLabel" name="label_5">
-    <property name="geometry">
-     <rect>
-      <x>20</x>
-      <y>520</y>
-      <width>141</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Tempo decorrido:</string>
-    </property>
-   </widget>
    <widget class="QLabel" name="label_6">
     <property name="geometry">
      <rect>
@@ -217,6 +204,32 @@
      <string>Pacote 3:</string>
     </property>
    </widget>
+   <widget class="QLabel" name="label_5">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>0</y>
+      <width>231</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Clique duas vezes para plotar</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_9">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>20</y>
+      <width>231</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Clique duas vezes novamente para remover</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -233,12 +246,6 @@
     </property>
     <addaction name="actionOpenFile"/>
    </widget>
-   <widget class="QMenu" name="menuHep">
-    <property name="title">
-     <string>Ajuda</string>
-    </property>
-    <addaction name="actionComo_utilizar"/>
-   </widget>
    <widget class="QMenu" name="menuFigure">
     <property name="title">
      <string>Figura</string>
@@ -249,7 +256,6 @@
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuFigure"/>
-   <addaction name="menuHep"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionOpenFile">
