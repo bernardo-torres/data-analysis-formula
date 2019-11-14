@@ -86,7 +86,9 @@ NPACK = 0
 
 
 def runAnalysis(file_path):
+    # clearPlots()
     global highFreqPack, NPACK
+    ui.listWidget.clear()
     # Abre arquivo
     #file_path = r'C:\Users\Be\github\DataAnalysisFormula\SkidPad_11_9__Pedico_2.txt'
     #file_path = selectFile()
@@ -164,6 +166,7 @@ def runAnalysis(file_path):
             bank[entry].calcTimeArraySize(highestFreq)
             # Acha em qual posição do vetor de tempo do pacote 1 esta o primeiro valor de
             # tempo do pacote 3
+            print(entry, firstTimeVal)
             indexFirstElement[entry-1] = np.where(bank[entry].packData[-1] == firstTimeVal)[0][0]
             # print(indexFirstElement)
 
