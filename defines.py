@@ -29,9 +29,10 @@ class pacotes():
         self.idealTimeArraySize = int(a/(highestFreq/self.Fs)) + 1
         return a
 
-    def createTimeVector(self, first, last, highestFreq):
+    def createTimeVector(self, first, arraySize, highestFreq):
         T = 1/highestFreq
-        self.time = np.arange(first*T, last*T, 1/(self.Fs))
+        self.time = np.arange(0, self.idealTimeArraySize)/(self.Fs) + first*T
+        #.arange(first*T, (first+arraySize)*T, 1/(self.Fs))
         return self.time
 
 

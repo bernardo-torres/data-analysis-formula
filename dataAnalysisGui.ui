@@ -136,6 +136,9 @@
       <height>621</height>
      </rect>
     </property>
+    <property name="currentIndex">
+     <number>0</number>
+    </property>
     <widget class="QWidget" name="tab">
      <attribute name="title">
       <string>Tab 1</string>
@@ -244,10 +247,73 @@
       </property>
      </widget>
     </widget>
-    <widget class="QWidget" name="tab_2">
+    <widget class="QWidget" name="Info">
      <attribute name="title">
-      <string>Tab 2</string>
+      <string>Info</string>
      </attribute>
+     <widget class="QPlainTextEdit" name="plainTextEdit">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>871</width>
+        <height>581</height>
+       </rect>
+      </property>
+      <property name="plainText">
+       <string>Espera-se como entrada um .txt que possua o seguinte formado nas primeiras linhas:
+Nao tem ptoblema adicionar comentários ou outras linhas entre os dois ***.
+As seguintes linhas sao essenciais, e devem ser mantidas exatamente da mesma forma como o exemplo abaixo:
+ -  Posicao maxima e minima do volante
+ - PACOTEN TAXA LISTADEDADOS VARIAVELTEMPORAL
+As linhas que informam a ordem dos dados recebidos deve iniciar com PACOTEN, onde N é o numero do pacote. Em seguida, a taxa de envio em Hz. Depois, separadas por espacos, os nomes das variaveis, até a última variavel que é a variável de tempo
+
+
+***
+CARRO:
+PISTA:
+PILOTO:
+TEMPERATURA AMBIENTE:
+ANTIROLL:
+PRESSAO PNEUS DIANTEIROS:
+PRESSAO PNEUS TASEIROS:
+ANGULO DE ATAQUE DA ASA:
+MAPA MOTOR:
+BALANCE BAR:
+DIFERENCIAL:
+TAXA DE AQUISICAO:
+COMENTARIOS:
+POSICAO MAXIMA DO VOLANTE:
+POSICAO MINIMA DO VOLANTE:
+SUSPENSAO:
+PACOTE1 60 acelX_DD acelY_DD acelZ_DD acelX_DE acelY_DE acelZ_DE acelX_TD acelY_TD acelZ_TD acelX_TE acelY_TE acelZ_TE velDE velDD velTE velTD rpm beacon time
+PACOTE2 30 tps oleoP fuelP injectors suspDE suspDD suspTE suspTD volPos correnteBat correnteVent correnteBomba frontBrakeP rearBrakeP time2
+PACOTE3 10 batVoltage ect oilTemp tempDiscoDE tempDiscoDD tempDiscoTE tempDiscoTD tempVent tempBomba runners releVent releBomba mata gpsLat gpsLong gpsNS gpsEW time3
+PACOTE4 30 ext1 ext2 ext3 ext4 ext5 ext6 ext7 ext8 ext9 ext10 ext11 ext12 time4
+***
+
+1 -6750 -6750 -6750 6750 6750 6750 0 0 0 0 0 0 0 0 0 0 0 0 1302
+2 0 5400 81 0 0 0 0 0 0 0 0 0 1350 18225 1302
+4 0 27000 0 0 6858 0 0 1302 0 0 0 0 1302
+3 0 135 0 0 0 0 0 0 0 0 1 0 0 0 0 78 69 1302
+1 -7000 -7000 -7000 7000 7000 7000 0 0 0 0 0 0 0 0 0 0 0 0 1303
+1 -7250 -7250 -7250 7250 7250 7250 0 0 0 0 0 0 0 0 0 0 0 0 1304
+2 0 5800 87 0 0 0 0 0 0 0 0 0 1450 21025 1304
+4 0 29000 0 0 7366 0 0 1304 0 0 0 0 1304
+1 -7500 -7500 -7500 7500 7500 7500 0 0 0 0 0 0 0 0 0 0 0 0 1305
+1 -7750 -7750 -7750 7750 7750 7750 0 0 0 0 0 0 0 0 0 0 0 0 1306
+2 0 6200 93 0 0 0 0 0 0 0 0 0 1550 24025 1306
+4 0 31000 0 0 7874 0 0 1306 0 0 0 0 1306
+1 -8000 -8000 -8000 8000 8000 8000 0 0 0 0 0 0 0 0 0 0 0 0 1307
+1 -8250 -8250 -8250 8250 8250 8250 0 0 0 0 0 0 0 0 0 0 0 0 1308
+2 0 6600 99 0 0 0 0 0 0 0 0 0 1650 27225 1308
+4 0 16744680 0 0 8382 0 0 1308 0 0 0 0 1308
+3 0 165 0 0 0 0 0 0 0 0 1 0 0 0 0 78 69 1308
+1 -8500 -8500 -8500 8500 8500 8500 0 0 0 0 0 0 0 0 0 0 0 0 1309
+1 -8750 -8750 -8750 8750 8750 8750 0 0 0 0 0 0 0 0 0 0 0 0 1310
+2 0 7000 105 0 0 0 0 0 0 0 0 0 1750 30625 1310</string>
+      </property>
+     </widget>
     </widget>
    </widget>
   </widget>
@@ -265,6 +331,7 @@
      <string>Arquivo</string>
     </property>
     <addaction name="actionOpenFile"/>
+    <addaction name="actionExportar_para_CSV"/>
    </widget>
    <widget class="QMenu" name="menuFigure">
     <property name="title">
@@ -301,6 +368,11 @@
   <action name="actionEixo_Y">
    <property name="text">
     <string>Eixo Y</string>
+   </property>
+  </action>
+  <action name="actionExportar_para_CSV">
+   <property name="text">
+    <string>Exportar para CSV</string>
    </property>
   </action>
  </widget>

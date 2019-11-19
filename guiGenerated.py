@@ -9,6 +9,7 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from mplwidget import MPLWidget
 
+
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -75,9 +76,12 @@ class Ui_MainWindow(object):
         self.clearPlotButton.setGeometry(QtCore.QRect(670, 20, 101, 31))
         self.clearPlotButton.setObjectName("clearPlotButton")
         self.tabWidget.addTab(self.tab, "")
-        self.tab_2 = QtWidgets.QWidget()
-        self.tab_2.setObjectName("tab_2")
-        self.tabWidget.addTab(self.tab_2, "")
+        self.Info = QtWidgets.QWidget()
+        self.Info.setObjectName("Info")
+        self.plainTextEdit = QtWidgets.QPlainTextEdit(self.Info)
+        self.plainTextEdit.setGeometry(QtCore.QRect(0, 0, 871, 581))
+        self.plainTextEdit.setObjectName("plainTextEdit")
+        self.tabWidget.addTab(self.Info, "")
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
         self.menubar.setGeometry(QtCore.QRect(0, 0, 1072, 21))
@@ -100,7 +104,10 @@ class Ui_MainWindow(object):
         self.actionEixo_X.setObjectName("actionEixo_X")
         self.actionEixo_Y = QtWidgets.QAction(MainWindow)
         self.actionEixo_Y.setObjectName("actionEixo_Y")
+        self.actionExportar_para_CSV = QtWidgets.QAction(MainWindow)
+        self.actionExportar_para_CSV.setObjectName("actionExportar_para_CSV")
         self.menuFile.addAction(self.actionOpenFile)
+        self.menuFile.addAction(self.actionExportar_para_CSV)
         self.menuFigure.addAction(self.actionTitulo)
         self.menuFigure.addAction(self.actionEixo_X)
         self.menuFigure.addAction(self.actionEixo_Y)
@@ -108,6 +115,7 @@ class Ui_MainWindow(object):
         self.menubar.addAction(self.menuFigure.menuAction())
 
         self.retranslateUi(MainWindow)
+        self.tabWidget.setCurrentIndex(0)
         QtCore.QMetaObject.connectSlotsByName(MainWindow)
 
     def retranslateUi(self, MainWindow):
@@ -127,7 +135,58 @@ class Ui_MainWindow(object):
         self.label_2.setText(_translate("MainWindow", "Offset"))
         self.clearPlotButton.setText(_translate("MainWindow", "Limpar Figura"))
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab), _translate("MainWindow", "Tab 1"))
-        self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_2), _translate("MainWindow", "Tab 2"))
+        self.plainTextEdit.setPlainText(_translate("MainWindow", "Espera-se como entrada um .txt que possua o seguinte formado nas primeiras linhas:\n"
+"Nao tem ptoblema adicionar comentários ou outras linhas entre os dois ***.\n"
+"As seguintes linhas sao essenciais, e devem ser mantidas exatamente da mesma forma como o exemplo abaixo:\n"
+" -  Posicao maxima e minima do volante\n"
+" - PACOTEN TAXA LISTADEDADOS VARIAVELTEMPORAL\n"
+"As linhas que informam a ordem dos dados recebidos deve iniciar com PACOTEN, onde N é o numero do pacote. Em seguida, a taxa de envio em Hz. Depois, separadas por espacos, os nomes das variaveis, até a última variavel que é a variável de tempo\n"
+"\n"
+"\n"
+"***\n"
+"CARRO:\n"
+"PISTA:\n"
+"PILOTO:\n"
+"TEMPERATURA AMBIENTE:\n"
+"ANTIROLL:\n"
+"PRESSAO PNEUS DIANTEIROS:\n"
+"PRESSAO PNEUS TASEIROS:\n"
+"ANGULO DE ATAQUE DA ASA:\n"
+"MAPA MOTOR:\n"
+"BALANCE BAR:\n"
+"DIFERENCIAL:\n"
+"TAXA DE AQUISICAO:\n"
+"COMENTARIOS:\n"
+"POSICAO MAXIMA DO VOLANTE:\n"
+"POSICAO MINIMA DO VOLANTE:\n"
+"SUSPENSAO:\n"
+"PACOTE1 60 acelX_DD acelY_DD acelZ_DD acelX_DE acelY_DE acelZ_DE acelX_TD acelY_TD acelZ_TD acelX_TE acelY_TE acelZ_TE velDE velDD velTE velTD rpm beacon time\n"
+"PACOTE2 30 tps oleoP fuelP injectors suspDE suspDD suspTE suspTD volPos correnteBat correnteVent correnteBomba frontBrakeP rearBrakeP time2\n"
+"PACOTE3 10 batVoltage ect oilTemp tempDiscoDE tempDiscoDD tempDiscoTE tempDiscoTD tempVent tempBomba runners releVent releBomba mata gpsLat gpsLong gpsNS gpsEW time3\n"
+"PACOTE4 30 ext1 ext2 ext3 ext4 ext5 ext6 ext7 ext8 ext9 ext10 ext11 ext12 time4\n"
+"***\n"
+"\n"
+"1 -6750 -6750 -6750 6750 6750 6750 0 0 0 0 0 0 0 0 0 0 0 0 1302\n"
+"2 0 5400 81 0 0 0 0 0 0 0 0 0 1350 18225 1302\n"
+"4 0 27000 0 0 6858 0 0 1302 0 0 0 0 1302\n"
+"3 0 135 0 0 0 0 0 0 0 0 1 0 0 0 0 78 69 1302\n"
+"1 -7000 -7000 -7000 7000 7000 7000 0 0 0 0 0 0 0 0 0 0 0 0 1303\n"
+"1 -7250 -7250 -7250 7250 7250 7250 0 0 0 0 0 0 0 0 0 0 0 0 1304\n"
+"2 0 5800 87 0 0 0 0 0 0 0 0 0 1450 21025 1304\n"
+"4 0 29000 0 0 7366 0 0 1304 0 0 0 0 1304\n"
+"1 -7500 -7500 -7500 7500 7500 7500 0 0 0 0 0 0 0 0 0 0 0 0 1305\n"
+"1 -7750 -7750 -7750 7750 7750 7750 0 0 0 0 0 0 0 0 0 0 0 0 1306\n"
+"2 0 6200 93 0 0 0 0 0 0 0 0 0 1550 24025 1306\n"
+"4 0 31000 0 0 7874 0 0 1306 0 0 0 0 1306\n"
+"1 -8000 -8000 -8000 8000 8000 8000 0 0 0 0 0 0 0 0 0 0 0 0 1307\n"
+"1 -8250 -8250 -8250 8250 8250 8250 0 0 0 0 0 0 0 0 0 0 0 0 1308\n"
+"2 0 6600 99 0 0 0 0 0 0 0 0 0 1650 27225 1308\n"
+"4 0 16744680 0 0 8382 0 0 1308 0 0 0 0 1308\n"
+"3 0 165 0 0 0 0 0 0 0 0 1 0 0 0 0 78 69 1308\n"
+"1 -8500 -8500 -8500 8500 8500 8500 0 0 0 0 0 0 0 0 0 0 0 0 1309\n"
+"1 -8750 -8750 -8750 8750 8750 8750 0 0 0 0 0 0 0 0 0 0 0 0 1310\n"
+"2 0 7000 105 0 0 0 0 0 0 0 0 0 1750 30625 1310"))
+        self.tabWidget.setTabText(self.tabWidget.indexOf(self.Info), _translate("MainWindow", "Info"))
         self.menuFile.setTitle(_translate("MainWindow", "Arquivo"))
         self.menuFigure.setTitle(_translate("MainWindow", "Figura"))
         self.actionOpenFile.setText(_translate("MainWindow", "Abrir"))
@@ -135,7 +194,7 @@ class Ui_MainWindow(object):
         self.actionTitulo.setText(_translate("MainWindow", "Titulo"))
         self.actionEixo_X.setText(_translate("MainWindow", "Eixo X"))
         self.actionEixo_Y.setText(_translate("MainWindow", "Eixo Y"))
-
+        self.actionExportar_para_CSV.setText(_translate("MainWindow", "Exportar para CSV"))
 
 
 if __name__ == "__main__":

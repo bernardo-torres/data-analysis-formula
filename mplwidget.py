@@ -44,6 +44,7 @@ class MPLWidget(QWidget):
             self.legendList.append(name)
         self.canvas.axes.legend(self.legendList, loc='upper right')
         self.canvas.draw()
+        return self.dicTeste
 
     def mplClear(self):
         self.canvas.axes.cla()
