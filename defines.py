@@ -5,6 +5,7 @@ volMIN = 345
 suspMAX = 4000
 suspMIN = 0
 
+
 class dataType():
     def __init__(self, packNo, positionInPack, data, Fs):
         self.positionInPack = positionInPack
@@ -47,7 +48,6 @@ dic1 = {
     'acelX': [mult, -1/16384, 0],
     'acelY': [mult, 1/16384, 0],
     'acelZ': [mult, 1/16384, 0],
-    'velDD': [mult, 1, 0],
     'velT': [mult, 1, 0],
     'sparkCut': [mult, 1, 0],
     'suspPos': [lin, suspMAX, suspMIN, 240, 120],
@@ -65,8 +65,27 @@ dic1 = {
     'releVent': [mult, 1, 0],
     'pduTemp': [mult, 1, 0],
     'tempDiscoD': [mult, 1, 0],
-    'tempDiscoE': [mult, 1, 0]
+    'tempDiscoE': [mult, 1, 0],
+    'ext1': [mult, 1, 0], 'ext2': [mult, 1, 0], 'ext3': [mult, 1, 0], 'ext4': [mult, 1, 0], 'ext5': [mult, 1, 0],
+    'ext6': [mult, 1, 0], 'ext7': [mult, 1, 0], 'ext8': [mult, 1, 0], 'ext9': [mult, 1, 0], 'ext10': [mult, 1, 0],
+    'ext11': [mult, 1, 0], 'ext12': [mult, 1, 0],
+
+    'acelX_DD': [mult, 1/16384, 0], 'acelY_DD': [mult, 1/16384, 0], 'acelZ_DD': [mult, 1/16384, 0],
+    'acelX_DE': [mult, 1/16384, 0], 'acelY_DE': [mult, 1/16384, 0], 'acelZ_DE': [mult, 1/16384, 0],
+    'acelX_TD': [mult, 1/16384, 0], 'acelY_TD': [mult, 1/16384, 0], 'acelZ_TD': [mult, 1/16384, 0],
+    'acelX_TE': [mult, 1/16384, 0], 'acelY_TE': [mult, 1/16384, 0], 'acelZ_TE': [mult, 1/16384, 0],
+    'velDD': [mult, 1, 0], 'velDE': [mult, 1, 0], 'velTD': [mult, 1, 0], 'velTE': [mult, 1, 0],
+    'rpm': [mult, 1, 0],
+    'injectors': [mult, 1, 0],
+    'suspDE': [mult, 1, 0], 'suspDD': [mult, 1, 0], 'suspTE': [mult, 1, 0], 'suspTD': [mult, 1, 0],
+    'correnteVent': [mult, 1, 0], 'correnteBomba': [mult, 1, 0],
+    'oilTemp': [mult, 1, 0], 'tempDiscoDE': [mult, 1, 0], 'tempDiscoDD': [mult, 1, 0],
+    'tempDiscoTE': [mult, 1, 0], 'tempDiscoTD': [mult, 1, 0],
+    'tempVent': [mult, 1, 0], 'tempBomba': [mult, 1, 0], 'runners': [mult, 1, 0],
+    'mata': [mult, 1, 0], 'gpsLat': [mult, 1, 0], 'gpsLong': [mult, 1, 0],
+    'gpsNS': [mult, 1, 0], 'gpsEW': [mult, 1, 0]
 }
+
 
 # Funcao que interpola linearmente um array entre dois pontos
 def linearInterp(vector, value, size):
@@ -89,7 +108,7 @@ baseString = 'ind acelX acelY acelZ velDD velT sparkCut suspPos time'
 baseString += ' oleoP fuelP tps rearBrakeP frontBrakeP volPos beacon correnteBat'
 baseString += ' ect batVoltage releBomba releVent pduTemp tempDiscoD tempDiscoE'
 
-print('Versão atual ---- beta 0.3 ---- 07/19')
+print('Versão atual ----  1.0 ---- 09/09/19')
 print('Ultimas Mudancas:')
 print('beta 0.2 -- 31/05')
 print('Clique no grafico para exibir os valores de um ponto especifico')
@@ -100,3 +119,5 @@ print('Nova interface')
 print('beta 0.3')
 print('Possivel adicionar multiplier e offset com decimais (utiliza-de . e nao ,)')
 print('Pegando max e min da posicao da suspensao por meio do txt')
+print('1.0')
+print('Nova interface usando Pyqt5')
