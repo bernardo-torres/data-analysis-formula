@@ -263,7 +263,7 @@ def runAnalysis(file_path):
                     break
                 delta = (bank[pack].packData[-1][i] - firstTimeVal)/(highestFreq/bank[pack].Fs)
                 delta = int(delta)
-                if delta == bank[pack].idealTimeArraySize:
+                if delta >= bank[pack].idealTimeArraySize:
                     break
                 pack1list = bank[pack].dataOrder
                 for entry in pack1list:
@@ -292,13 +292,14 @@ def runAnalysis(file_path):
 
 
     # Aplica funcoes
-    for i in dic1:
-        aux = bank.get(i, KEY_NOT_FOUND)
-        if aux != KEY_NOT_FOUND:
-            if dic1[i][0] == mult:
-                bank[i].data = dic1[i][0](bank[i].data, dic1[i][1], dic1[i][2])
-            else:
-                bank[i].data = dic1[i][0](bank[i].data, dic1[i][1], dic1[i][2], dic1[i][3], dic1[i][4])
+    if ui.radioButton.isChecked():
+        for i in dic1:
+            aux = bank.get(i, KEY_NOT_FOUND)
+            if aux != KEY_NOT_FOUND:
+                if dic1[i][0] == mult:
+                    bank[i].data = dic1[i][0](bank[i].data, dic1[i][1], dic1[i][2])
+                else:
+                    bank[i].data = dic1[i][0](bank[i].data, dic1[i][1], dic1[i][2], dic1[i][3], dic1[i][4])
 
     #plt.plot(bank[1].time, bank['volPos'].data,bank['time'].data, bank['acelY'].data*100, linewidth=0.5)
 

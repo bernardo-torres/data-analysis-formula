@@ -18,7 +18,7 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>50</y>
+      <y>110</y>
       <width>131</width>
       <height>341</height>
      </rect>
@@ -40,7 +40,7 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>430</y>
+      <y>460</y>
       <width>141</width>
       <height>16</height>
      </rect>
@@ -53,7 +53,7 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>500</y>
+      <y>530</y>
       <width>141</width>
       <height>16</height>
      </rect>
@@ -66,7 +66,7 @@
     <property name="geometry">
      <rect>
       <x>40</x>
-      <y>450</y>
+      <y>480</y>
       <width>141</width>
       <height>16</height>
      </rect>
@@ -79,7 +79,7 @@
     <property name="geometry">
      <rect>
       <x>40</x>
-      <y>465</y>
+      <y>490</y>
       <width>131</width>
       <height>16</height>
      </rect>
@@ -92,7 +92,7 @@
     <property name="geometry">
      <rect>
       <x>40</x>
-      <y>480</y>
+      <y>510</y>
       <width>131</width>
       <height>16</height>
      </rect>
@@ -105,7 +105,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>0</y>
+      <y>50</y>
       <width>231</width>
       <height>16</height>
      </rect>
@@ -118,7 +118,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>20</y>
+      <y>70</y>
       <width>231</width>
       <height>16</height>
      </rect>
@@ -315,6 +315,25 @@ PACOTE4 30 ext1 ext2 ext3 ext4 ext5 ext6 ext7 ext8 ext9 ext10 ext11 ext12 time4
       </property>
      </widget>
     </widget>
+   </widget>
+   <widget class="QRadioButton" name="radioButton">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>20</y>
+      <width>101</width>
+      <height>17</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Aplicar Funcoes</string>
+    </property>
+    <property name="checked">
+     <bool>true</bool>
+    </property>
+    <property name="autoExclusive">
+     <bool>false</bool>
+    </property>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
