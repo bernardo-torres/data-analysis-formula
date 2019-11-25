@@ -94,6 +94,9 @@ def linearInterp(vector, value, size):
     for i in range(0, size):
         if vector.data[i] == value:
             cnt = cnt + 1
+            if i == (size-1):
+                for j in range(i-cnt, i+1):
+                    vector.data[j] = vector.data[i-cnt]
         elif cnt != 0:
             delta = vector.data[i] - vector.data[i-cnt-1]
             dv = delta/(cnt+1)
@@ -102,14 +105,100 @@ def linearInterp(vector, value, size):
                 vector.data[j] = vector.data[i-cnt-1] + dv*k
                 k = k + 1
             cnt = 0
+ 
+            
     return vector
+
+
+def hampel(vals_orig, k=7, t0=3):
+    '''
+    vals: pandas series of values from which to remove outliers
+    k: size of window (including the sample; 7 is equal to 3 on either side of value)
+    '''
+
+    #Make copy so original not edited
+    vals = vals_orig.copy()
+
+    #Hampel Filter
+    L = 1.4826
+    rolling_median = vals.rolling(window=k, center=True).median()
+    MAD = lambda x: np.median(np.abs(x - np.median(x)))
+    rolling_MAD = vals.rolling(window=k, center=True).apply(MAD)
+    threshold = t0 * L * rolling_MAD
+    difference = np.abs(vals - rolling_median)
+
+    '''
+    Perhaps a condition should be added here in the case that the threshold value
+    is 0.0; maybe do not mark as outlier. MAD may be 0.0 without the original values
+    being equal. See differences between MAD vs SDV.
+    '''
+
+    outlier_idx = difference > threshold
+#    vals[outlier_idx] = np.nan
+    vals[outlier_idx] = rolling_median[outlier_idx]
+    return(vals)
+    
+#def hampel(x,k,method="center",thr=3):
+#    #Input
+#    # x       input data
+#    # k       half window size (full 2*k+1)
+#    # mode    about both ends
+#    #         str {‘center’, 'same','ignore',‘nan’}, optional
+#    #
+#    #           center  set center of window at target value
+#    #           same    always same window size
+#    #           ignore  set original data
+#    #           nan     set non
+#    #           
+#    # thr     threshold (defaut 3), optional
+#    #Output
+#    # newX    filtered data
+#    # omadIdx indices of outliers
+#    arraySize=len(x)
+#    idx=np.arange(arraySize)
+#    newX=x.copy().values
+#    omadIdx=np.zeros_like(x)
+#    for i in range(arraySize):
+#        mask1=np.where( idx>= (idx[i]-k) ,True, False)
+#        mask2=np.where( idx<= (idx[i]+k) ,True, False)
+#        kernel= np.logical_and(mask1,mask2)
+#        if method=="same":
+#            if i<(k):
+#                kernel=np.zeros_like(x).astype(bool)
+#                kernel[:(2*k+1)]=True
+#            elif i>= (len(x)-k):
+#                kernel=np.zeros_like(x).astype(bool)
+#                kernel[-(2*k+1):]=True
+#        #print (kernel.astype(int))
+#        #print (x[kernel])
+#        med0=np.median(x[kernel])
+#        #print (med0)
+#        s0=1.4826*np.median(np.abs(x[kernel]-med0))
+#        if np.abs(x[i]-med0)>thr*s0:
+#             omadIdx[i]=1
+#             newX[i]=med0
+#    
+#    if method=="nan":
+#        newX[:k]=np.nan
+#        newX[-k:]=np.nan
+#        omadIdx[:k]=0
+#        omadIdx[-k:]=0
+#    elif method=="ignore":
+#        newX[:k]=x[:k]
+#        newX[-k:]=x[-k:]
+#        omadIdx[:k]=0
+#        omadIdx[-k:]=0        
+#        
+#    return newX,omadIdx.astype(bool)
+#    
+    
 
 # Só para teste
 baseString = 'ind acelX acelY acelZ velDD velT sparkCut suspPos time'
 baseString += ' oleoP fuelP tps rearBrakeP frontBrakeP volPos beacon correnteBat'
 baseString += ' ect batVoltage releBomba releVent pduTemp tempDiscoD tempDiscoE'
 
-print('Versão atual ----  1.0 ---- 09/09/19')
+print('Versão atual ----  1.1 ---- 11/19')
 print('Ultimas Mudancas:')
 print('beta 0.2 -- 31/05')
 print('Clique no grafico para exibir os valores de um ponto especifico')
@@ -122,3 +211,5 @@ print('Possivel adicionar multiplier e offset com decimais (utiliza-de . e nao ,
 print('Pegando max e min da posicao da suspensao por meio do txt')
 print('1.0')
 print('Nova interface usando Pyqt5')
+print('1.1')
+print('Conserto de bugs, exportar para csv')

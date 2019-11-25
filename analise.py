@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import sys
 from matplotlib.backends.backend_qt5agg import (NavigationToolbar2QT as NavigationToolbar)
 import pandas as pd
+from scipy.signal import savgol_filter
 
 
 # Arquivos
@@ -32,11 +33,28 @@ def listClicked(item):
     offset = float(ui.offsetLineEdit.text())
     name = item.text()
     data = bank[item.text()].data * mult + offset
+
+    if ui.hampelActive.isChecked():
+        name = name+'_h'
+    if ui.savgol.isChecked():
+        name = name+'_s'
+
     if name in dataDictionary:
         #dataDictionary[name].remove()
         del dataDictionary[name]
-
     else:
+        if ui.hampelActive.isChecked():
+            window = int(ui.multiplierLineEdit_2.text())
+            t0 = int(ui.offsetLineEdit_2.text())
+            data= hampel(pd.Series(data),window, t0)
+            data = data.values
+
+        if ui.savgol.isChecked():
+            window = int(ui.multiplierLineEdit_3.text())
+            order = int(ui.offsetLineEdit_3.text())
+            data = savgol_filter(data, window, order)
+
+
         dataDictionary[name] = data
 
     ui.widget.mplPlot(bank[highFreqPack].time, data, name)
@@ -46,6 +64,7 @@ def listClicked(item):
 
 def clearPlots():
     ui.widget.mplClear()
+    dataDictionary.clear()
 
 
 def resetMultOffset():
@@ -204,7 +223,20 @@ def runAnalysis(file_path):
     firstTimeVal = bank[lowFreqPack].packData[-1][0]
     lastTimeVal = bank[lowFreqPack].packData[-1][-1]
     for pack in receivedPacks:
+
         if len(bank[pack].packData) != 0:
+            lastTime = bank[pack].packData[-1][0]
+            resetCount = 0
+            for time, i in zip(bank[pack].packData[-1], range(0, len(bank[pack].packData[-1]))):
+
+                if time < lastTime:
+                    resetCount = resetCount+1
+                lastTime = time
+                time = time + resetCount*65536
+                bank[pack].packData[-1][i] = time
+
+
+
             bank[pack].calcTimeArraySize(highestFreq)
             # Acha em qual posição do vetor de tempo do pacote 1 esta o primeiro valor de
             # tempo do pacote 3
@@ -215,6 +247,7 @@ def runAnalysis(file_path):
             else:
                 index = np.searchsorted(bank[pack].packData[-1], firstTimeVal)
                 bank[pack].packData[-1][index] = firstTimeVal
+
 
 
     indexFirstElement = indexFirstElement.astype(int)
@@ -281,6 +314,7 @@ def runAnalysis(file_path):
                 bank[dta] = linearInterp(bank[dta], -20000, bank[pack].idealTimeArraySize)
 
 
+
     # Interpola para colocar todos os dados na mesma base de tempo
     for pack in receivedPacks:
         if len(bank[pack].packData) != 0:
@@ -311,9 +345,16 @@ def runAnalysis(file_path):
         if aux != KEY_NOT_FOUND:
             ui.listWidget.addItem(i)
 
-    ui.label_6.setText("Pacote 1: " + str(round(bank[1].loss*100,2)) + '%')
-    ui.label_7.setText("Pacote 2: " + str(round(bank[2].loss*100,2)) + '%')
-    ui.label_8.setText("Pacote 3: " + str(round(bank[3].loss*100,2)) + '%')
+    if 1 in bank:
+        ui.label_6.setText("Pacote 1: " + str(round(bank[1].loss*100,2)) + '%')
+    if 2 in bank:
+        ui.label_7.setText("Pacote 2: " + str(round(bank[2].loss*100,2)) + '%')
+    if 3 in bank:
+        ui.label_8.setText("Pacote 3: " + str(round(bank[3].loss*100,2)) + '%')
+    if 4 in bank:
+        ui.label_10.setText("Pacote 4: " + str(round(bank[4].loss*100,2)) + '%')
+
+    ui.label_4.setText("Numero de pontos: " + str(int(idealTimeArraySize)))
 
 # MainWindow.toolbar = NavigationToolbar(ui.widget.canvas, MainWindow, coordinates=True)
 # MainWindow.addToolBar(MainWindow.toolbar)

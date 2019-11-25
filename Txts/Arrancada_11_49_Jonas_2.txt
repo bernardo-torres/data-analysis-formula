@@ -11,6 +11,10 @@ MAPA MOTOR:
 BALANCE BAR: 
 DIFERENCIAL: 
 COMENTÁRIOS: Fs = 40Hz
+PACOTE1 40 acelY acelX acelZ velDD sparkCut suspPos time
+PACOTE2 20 oleoP fuelP tps rearBrakeP frontBrakeP volPos beacon correnteBat time2
+PACOTE3 2 ect batVoltage releBomba releVent pduTemp tempDiscoD tempDiscoE time3
+PACOTE4 20 ext1 ext2 ext3 time4
 ***
 
 3 900 1348 0 0 0 0 0 5520
