@@ -62,11 +62,11 @@ PACOTE4 20 ext1 ext2 ext3 time4
 ```
 # Funcoes de calibracao
 
-As funcoes de calibracao podem ser modificadas pelo usuário. A configuracao dos valores das funcoes é feita por meio do arquivo *functions.txt*.
+As funcoes de calibracao podem ser modificadas pelo usuário. A configuracao dos valores das funcoes é feita por meio do arquivo *functions.txt*, localizado **na mesma pasta que o arquivo executável, dentro de /dist/analise**. 
 
 O arquivo possui o formato:
 ```
->acelX mult 0.0000610351 0
+acelX mult 0.0000610351 0
 acelY mult 0.0000610351 0
 acelZ mult 0.0000610351 0
 velT mult 1 0
@@ -76,31 +76,31 @@ oleoP mult 0.001 0
 fuelP mult 0.001 0
 ```
 Na primeira coluna temos o nome da variável, que tem que ser o mesmo nome colocado no .txt da entrada para que ela possa ser mostrada no gráfico em sua escala correta. Considerando o arquivo de configuracao de exemplo acima, se no .txt de entrada há a seguinte linha:
-
->PACOTE1 40 acelY acelX aceleracaoZ velDD sparkCut suspPos time
-
+```
+PACOTE1 40 acelY acelX aceleracaoZ velDD sparkCut suspPos time
+```
 Todos os dados, exceto o *aceleracaoZ*, estariam em suas escalas corretas, pois há correspondencia de nomes com o arquivo de configuracao das funcoes de calibracao.
 
 Para modificar, basta editar o valor desejado (ou inserir uma linha) e salvar o arquivo.
 
 A segunda coluna pode conter dois valores: **mult** ou **lin**. Uma linha com **mult**, na forma:
-
-> nomeDoDado mult A B
-
+```
+nomeDoDado mult A B
+```
 Terá sua funcao na forma:
-
-> Valor na escala correta = valor gravado * A + B
-
+```
+Valor na escala correta = valor gravado * A + B
+```
 Ou seja, o primeiro numero (A) é o multiplicador e (B) o offset.
 
 Uma linha com **lin**, na forma:
-
->nomeDoDado lin max min range offset
-
+```
+nomeDoDado lin max min range offset
+```
 Terá sua funcao na forma:
-
-> Valor na escala correta =  (valor gravado - MAX) * range/(MAX-MIN) - offset
-
+```
+Valor na escala correta =  (valor gravado - MAX) * range/(MAX-MIN) - offset
+```
 
 # Desenvolvimento
 ## Dependencias
@@ -128,3 +128,8 @@ Após executar o comando, procure a linha <from pyqtgraph import PlotWidget>, no
 (deve estar antes da declaracao <if __name__ == "__main__":>, no fim do arquivo), recorte ela e cole após a
 declaracao <from PyQt5 import QtCore, QtGui, QtWidgets>, no inicio do arquivo. Isso deve ser feito após qualquer
 alteracao no Qt Designer para que ela tenha efeito no codigo, de forma a evitar o erro no qual nao é reconhecido o modulo pyqtgraph.
+ 
+## Pyinstaller (executavel)
+```
+pyinstaller --add-data "functions.txt;." analise.py
+```
