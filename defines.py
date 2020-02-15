@@ -105,8 +105,8 @@ def linearInterp(vector, value, size):
                 vector.data[j] = vector.data[i-cnt-1] + dv*k
                 k = k + 1
             cnt = 0
- 
-            
+
+
     return vector
 
 
@@ -137,7 +137,7 @@ def hampel(vals_orig, k=7, t0=3):
 #    vals[outlier_idx] = np.nan
     vals[outlier_idx] = rolling_median[outlier_idx]
     return(vals)
-    
+
 #def hampel(x,k,method="center",thr=3):
 #    #Input
 #    # x       input data
@@ -149,7 +149,7 @@ def hampel(vals_orig, k=7, t0=3):
 #    #           same    always same window size
 #    #           ignore  set original data
 #    #           nan     set non
-#    #           
+#    #
 #    # thr     threshold (defaut 3), optional
 #    #Output
 #    # newX    filtered data
@@ -177,7 +177,7 @@ def hampel(vals_orig, k=7, t0=3):
 #        if np.abs(x[i]-med0)>thr*s0:
 #             omadIdx[i]=1
 #             newX[i]=med0
-#    
+#
 #    if method=="nan":
 #        newX[:k]=np.nan
 #        newX[-k:]=np.nan
@@ -187,11 +187,11 @@ def hampel(vals_orig, k=7, t0=3):
 #        newX[:k]=x[:k]
 #        newX[-k:]=x[-k:]
 #        omadIdx[:k]=0
-#        omadIdx[-k:]=0        
-#        
+#        omadIdx[-k:]=0
+#
 #    return newX,omadIdx.astype(bool)
-#    
-    
+#
+
 
 # Só para teste
 baseString = 'ind acelX acelY acelZ velDD velT sparkCut suspPos time'
@@ -213,3 +213,21 @@ print('1.0')
 print('Nova interface usando Pyqt5')
 print('1.1')
 print('Conserto de bugs, exportar para csv')
+
+print('Abrindo arquivo functions.txt')
+try:
+    with open('functions.txt', 'r') as document:
+        dic1 = {}
+        for line in document:
+            line = line.split()
+            if not line:  # empty line?
+                continue
+            for i in range(2, len(line)):
+                line[i] = float(line[i])
+            if line[1] == 'mult':
+                line[1] = mult
+            elif line[1] == 'lin':
+                line[1] = lin
+            dic1[line[0]] = line[1:]
+except:
+    print('Falha ao abrir functions.txt')

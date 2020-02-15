@@ -196,9 +196,12 @@ def runAnalysis(file_path):
                 # Medida para evitar erros, caso o identificador venha errado
                 if currentPackNo in receivedPacks:
                     # Converte dados separados em splitLine para inteiros
-                    aux = [int(x) for x in splitLine[1: len(splitLine)]]
-                    # Adiciona lista com valores da linha
-                    bank[currentPackNo].packData.append(aux)
+                    try:
+                        aux = [int(x) for x in splitLine[1: len(splitLine)]]
+                        # Adiciona lista com valores da linha
+                        bank[currentPackNo].packData.append(aux)
+                    except:
+                        print('Problema na leitura da linha : '+currentLine)
     #print(dic1['volPos'])
     lowFreqPack = 0
     lowestFreq = 1000
