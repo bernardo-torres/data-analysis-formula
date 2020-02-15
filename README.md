@@ -1,7 +1,7 @@
 # Como utilizar
 ## Arquivos
 
-Baixe os arquivos o repositório. O executável do programa se encontra na pasta *dist*, com o nome analise.exe. Recomendo criar um atalho para esse .exe caso nao queira abrir essa pasta sempre que for utilizar o programa.
+Baixe os arquivos do repositório. O executável do programa se encontra na pasta *dist*, com o nome analise.exe. Recomendo criar um atalho para esse .exe caso nao queira abrir essa pasta sempre que for utilizar o programa. Para executar e utilizar o programa, só é necessário baixar a pasta *dist*.
 
 As pastas *Txts competicao 2018* e *Mais txts* contem arquivos .txts de exemplo no formato aceito pelo programa e funcionando (fev/2020).
 
@@ -37,7 +37,7 @@ As seguintes linhas sao essenciais, e devem ser mantidas exatamente da mesma for
 
 As linhas que informam a ordem dos dados recebidos deve iniciar com PACOTEN, onde N é o numero do pacote. Em seguida, a taxa de envio em Hz. Depois, separadas por espacos, os nomes das variaveis, até a última variavel que é a variável de tempo
 
->
+```
 ***
 CARRO: TR-06
 PISTA: autocross - ECPA
@@ -56,15 +56,16 @@ PACOTE2 20 oleoP fuelP tps rearBrakeP frontBrakeP volPos beacon correnteBat time
 PACOTE3 2 ect batVoltage releBomba releVent pduTemp tempDiscoD tempDiscoE time3
 PACOTE4 20 ext1 ext2 ext3 time4
 ***
+
 1 14736 -5034 14350 53 0 0 14392
 2 4574 2941 831 229 249 2196 1 2034 14392
-
+```
 # Funcoes de calibracao
 
 As funcoes de calibracao podem ser modificadas pelo usuário. A configuracao dos valores das funcoes é feita por meio do arquivo *functions.txt*.
 
 O arquivo possui o formato:
-
+```
 >acelX mult 0.0000610351 0
 acelY mult 0.0000610351 0
 acelZ mult 0.0000610351 0
@@ -73,7 +74,7 @@ sparkCut mult 1 0
 suspPos lin 5000 0 240 120
 oleoP mult 0.001 0
 fuelP mult 0.001 0
-
+```
 Na primeira coluna temos o nome da variável, que tem que ser o mesmo nome colocado no .txt da entrada para que ela possa ser mostrada no gráfico em sua escala correta. Considerando o arquivo de configuracao de exemplo acima, se no .txt de entrada há a seguinte linha:
 
 >PACOTE1 40 acelY acelX aceleracaoZ velDD sparkCut suspPos time
@@ -105,11 +106,13 @@ Terá sua funcao na forma:
 ## Dependencias
 Dependencias para desenvolvimento
 
+```
 matplotlib - pip install matplotlib
 numpy - pip install numpy
 pyqt5-tools - pip install pyqt5-tools
 PyQt5
 pyqtgraph - pip install pyqtgraph
+```
 
 O pyqt5-tools instala também o Qt Designer, ferramenta utilizada para criar o visual da interface
 
