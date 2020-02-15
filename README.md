@@ -29,8 +29,8 @@ Na parte inferior encontram-se ferramentas para manipular o gráfico, como zoom 
 
 ## Formato do .txt de entradas
 
-Espera-se como entrada um .txt que possua o seguinte formado nas primeiras linhas:
-Nao tem problema adicionar comentários ou outras linhas entre os dois \***.
+Espera-se como entrada um .txt que possua o formato mostrado abaixo nas primeiras linhas.
+Nao tem problema adicionar comentários ou outras linhas entre os dois \*\*\*.
 As seguintes linhas sao essenciais, e devem ser mantidas exatamente da mesma forma como o exemplo abaixo:
  -  Posicao maxima e minima do volante
  - PACOTEN TAXA LISTADEDADOS VARIAVELTEMPORAL
