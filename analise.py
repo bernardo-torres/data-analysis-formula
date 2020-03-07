@@ -197,7 +197,7 @@ def runAnalysis(file_path):
                 if currentPackNo in receivedPacks:
                     # Converte dados separados em splitLine para inteiros
                     try:
-                        aux = [int(x) for x in splitLine[1: len(splitLine)]]
+                        aux = [float(x) for x in splitLine[1: len(splitLine)]]
                         # Adiciona lista com valores da linha
                         bank[currentPackNo].packData.append(aux)
                     except:
@@ -233,7 +233,11 @@ def runAnalysis(file_path):
             for time, i in zip(bank[pack].packData[-1], range(0, len(bank[pack].packData[-1]))):
 
                 if time < lastTime:
-                    resetCount = resetCount+1
+                    if lastTime < bank[pack].packData[-1][i+1]:
+                        print('Problema no pacote '+ str(pack) + ' no valor de tempo ' + str(time))
+                        time = lastTime + int(highestFreq/bank[pack].Fs)
+                    else:
+                        resetCount = resetCount+1
                 lastTime = time
                 time = time + resetCount*65536
                 bank[pack].packData[-1][i] = time
@@ -243,7 +247,7 @@ def runAnalysis(file_path):
             bank[pack].calcTimeArraySize(highestFreq)
             # Acha em qual posição do vetor de tempo do pacote 1 esta o primeiro valor de
             # tempo do pacote 3
-            print(pack, firstTimeVal)
+            print("Pacote " + str(pack)+', primeiro valor de tempo = '+ str(firstTimeVal))
             newFirstValue = np.where(bank[pack].packData[-1] == firstTimeVal)
             if newFirstValue[0].size > 0:
                 indexFirstElement[pack-1] =  newFirstValue[0][0]
@@ -258,7 +262,7 @@ def runAnalysis(file_path):
     for pack in receivedPacks:
         if len(bank[pack].packData) != 0:
             bank[pack].loss = len(bank[pack].packData[-1])/(bank[pack].idealTimeArraySize)
-            #print(str(len(bank[entry].packData[-1])) + ' ' + str(bank[entry].idealTimeArraySize))
+            print(str(len(bank[pack].packData[-1])) + ' ' + str(bank[pack].idealTimeArraySize))
             print('Perda pacote ' + str(pack) + ' = ' + str(bank[pack].loss))
 
 
@@ -392,4 +396,4 @@ if __name__ == "__main__":
 
 
 
-sys.exit(app.exec_())
+#sys.exit(app.exec_())
