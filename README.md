@@ -145,3 +145,4 @@ pyinstaller --add-data "functions.txt;." analise.py
 - [ ] Reset mais inteligente das cores do gráfico
 - [ ] Adicionar input manual das freqs de aquisição na interface
 - [ ] Adicionar opção de resample para outras frequencias
+- [ ] Erro quando o usuario tenta exportar mais nao ha dados
