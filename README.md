@@ -1,11 +1,15 @@
-# Como utilizar
-## Arquivos
+# Data Analysis Formula UFMG
+## Como utilizar
+### Arquivos
 
-Baixe os arquivos do repositório. O executável do programa se encontra na pasta *dist*, com o nome analise.exe. Recomendo criar um atalho para esse .exe caso nao queira abrir essa pasta sempre que for utilizar o programa. Para executar e utilizar o programa, só é necessário baixar a pasta *dist*.
+Baixe os arquivos do repositório. O executável do programa se encontra na pasta *dist*, com o nome analise.exe. Recomendo criar um atalho para esse .exe caso não queira abrir essa pasta sempre que for utilizar o programa. Para executar e utilizar o programa, só é necessário baixar a pasta *dist*.
 
 As pastas *Txts competicao 2018* e *Mais txts* contem arquivos .txts de exemplo no formato aceito pelo programa e funcionando (fev/2020).
+### Pré-requisitos
 
-## Utilizando o programa
+Na versão atual, não há pré-requisitos para utilizar o executável. Para desenvolvimento ou para rodar os scripts .py, sem utilizar o executável, veja [Desenvolvimento(#desenvolvimento).
+
+### Utilizando o programa
 
 ![print](/images/print.png)
 
@@ -27,7 +31,7 @@ Os efeitos mencionados só sao aplicados aos **novos** dados inseridos, ou seja,
 
 Na parte inferior encontram-se ferramentas para manipular o gráfico, como zoom  e selecao. É possível também modificar a cor e o estilo das curvas, assim como salvar a imagem.
 
-## Formato do .txt de entradas
+### Formato do .txt de entradas
 
 Espera-se como entrada um .txt que possua o formato mostrado abaixo nas primeiras linhas.
 Nao tem problema adicionar comentários ou outras linhas entre os dois \*\*\*.
@@ -60,7 +64,7 @@ PACOTE4 20 ext1 ext2 ext3 time4
 1 14736 -5034 14350 53 0 0 14392
 2 4574 2941 831 229 249 2196 1 2034 14392
 ```
-# Funcoes de calibracao
+### Funcoes de calibracao
 
 As funcoes de calibracao podem ser modificadas pelo usuário. A configuracao dos valores das funcoes é feita por meio do arquivo *functions.txt*, localizado **na mesma pasta que o arquivo executável, dentro de /dist/analise**.
 
@@ -102,8 +106,8 @@ Terá sua funcao na forma:
 Valor na escala correta =  (valor gravado - MAX) * range/(MAX-MIN) - offset
 ```
 
-# Desenvolvimento
-## Dependencias
+##Desenvolvimento
+### Dependencias
 Dependencias para desenvolvimento
 
 ```
@@ -112,11 +116,12 @@ numpy - pip install numpy
 pyqt5-tools - pip install pyqt5-tools
 PyQt5
 pyqtgraph - pip install pyqtgraph
+pandas - pip install pandas
 ```
 
 O pyqt5-tools instala também o Qt Designer, ferramenta utilizada para criar o visual da interface
 
-## Modificando a interface
+### Modificando a interface
 
 Para modificar algo na interface, altere o arquivo interface.ui, salve, e execute o seguinte comando:
 
@@ -129,8 +134,14 @@ Após executar o comando, procure a linha <from pyqtgraph import PlotWidget>, no
 declaracao <from PyQt5 import QtCore, QtGui, QtWidgets>, no inicio do arquivo. Isso deve ser feito após qualquer
 alteracao no Qt Designer para que ela tenha efeito no codigo, de forma a evitar o erro no qual nao é reconhecido o modulo pyqtgraph.
 
-## Pyinstaller (executavel)
+### Pyinstaller (executavel)
 ```
 pyinstaller --add-data "functions.txt;." analise.py
 ```
 ## Próximas modificações
+- [x] Reescrever runAnalysis utilizando pandas (29/05)
+- [ ] Adicionar export para arquivo do Pro Tunr
+- [ ] Adicionar import de csv
+- [ ] Reset mais inteligente das cores do gráfico
+- [ ] Adicionar input manual das freqs de aquisição na interface
+- [ ] Adicionar opção de resample para outras frequencias
