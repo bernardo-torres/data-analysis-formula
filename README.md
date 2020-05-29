@@ -62,7 +62,7 @@ PACOTE4 20 ext1 ext2 ext3 time4
 ```
 # Funcoes de calibracao
 
-As funcoes de calibracao podem ser modificadas pelo usuário. A configuracao dos valores das funcoes é feita por meio do arquivo *functions.txt*, localizado **na mesma pasta que o arquivo executável, dentro de /dist/analise**. 
+As funcoes de calibracao podem ser modificadas pelo usuário. A configuracao dos valores das funcoes é feita por meio do arquivo *functions.txt*, localizado **na mesma pasta que o arquivo executável, dentro de /dist/analise**.
 
 O arquivo possui o formato:
 ```
@@ -128,8 +128,9 @@ Após executar o comando, procure a linha <from pyqtgraph import PlotWidget>, no
 (deve estar antes da declaracao <if __name__ == "__main__":>, no fim do arquivo), recorte ela e cole após a
 declaracao <from PyQt5 import QtCore, QtGui, QtWidgets>, no inicio do arquivo. Isso deve ser feito após qualquer
 alteracao no Qt Designer para que ela tenha efeito no codigo, de forma a evitar o erro no qual nao é reconhecido o modulo pyqtgraph.
- 
+
 ## Pyinstaller (executavel)
 ```
 pyinstaller --add-data "functions.txt;." analise.py
 ```
+## Próximas modificações

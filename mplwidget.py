@@ -27,11 +27,13 @@ class MPLWidget(QWidget):
 
         self.layout().addWidget(self.toolbar)
 
-        self.canvas.axes.set_xlabel('Tempo (s)')
+        self. mplSetXLabel('Tempo (s)')
 
         self.legendList = []
 
         self.dicTeste = {}
+        
+        
 
     def mplPlot(self, timeVector, dataVector, name):
         if name in self.dicTeste:
@@ -42,6 +44,7 @@ class MPLWidget(QWidget):
             plotData, = self.canvas.axes.plot(timeVector, dataVector, linewidth=1)
             self.dicTeste[name] = plotData
             self.legendList.append(name)
+            
         self.canvas.axes.legend(self.legendList, loc='upper right')
         self.canvas.draw()
         return self.dicTeste

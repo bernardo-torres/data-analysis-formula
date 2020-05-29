@@ -16,8 +16,8 @@ POSICAO MAXIMA DO VOLANTE:
 POSICAO MINIMA DO VOLANTE: 
 SUSPENSAO: 
 PACOTE1 60 acelX_DD acelY_DD acelZ_DD acelX_DE acelY_DE acelZ_DE acelX_TD acelY_TD acelZ_TD acelX_TE acelY_TE acelZ_TE velDE velDD velTE velTD rpm beacon time
-PACOTE2 10 tps oleoP fuelP injectors suspDE suspDD suspTE suspTD volPos correnteBat correnteVent correnteBomba frontBrakeP rearBrakeP time2
-PACOTE3 30 batVoltage ect oilTemp tempDiscoDE tempDiscoDD tempDiscoTE tempDiscoTD tempVent tempBomba runners releVent releBomba mata gpsLat gpsLong gpsNS gpsEW time3
+PACOTE2 30 tps oleoP fuelP injectors suspDE suspDD suspTE suspTD volPos correnteBat correnteVent correnteBomba frontBrakeP rearBrakeP time2
+PACOTE3 10 batVoltage ect oilTemp tempDiscoDE tempDiscoDD tempDiscoTE tempDiscoTD tempVent tempBomba runners releVent releBomba mata gpsLat gpsLong gpsNS gpsEW time3
 PACOTE4 30 ext1 ext2 ext3 ext4 ext5 ext6 ext7 ext8 ext9 ext10 ext11 ext12 time4
 ***
 
