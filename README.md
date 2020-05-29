@@ -7,7 +7,7 @@ Baixe os arquivos do repositório. O executável do programa se encontra na past
 As pastas *Txts competicao 2018* e *Mais txts* contem arquivos .txts de exemplo no formato aceito pelo programa e funcionando (fev/2020).
 ### Pré-requisitos
 
-Na versão atual, não há pré-requisitos para utilizar o executável. Para desenvolvimento ou para rodar os scripts .py, sem utilizar o executável, veja [Desenvolvimento(#desenvolvimento).
+Na versão atual, não há pré-requisitos para utilizar o executável. Para desenvolvimento ou para rodar os scripts .py, sem utilizar o executável, veja [Desenvolvimento](#desenvolvimento).
 
 ### Utilizando o programa
 
@@ -106,7 +106,7 @@ Terá sua funcao na forma:
 Valor na escala correta =  (valor gravado - MAX) * range/(MAX-MIN) - offset
 ```
 
-##Desenvolvimento
+## Desenvolvimento
 ### Dependencias
 Dependencias para desenvolvimento
 
@@ -140,7 +140,7 @@ pyinstaller --add-data "functions.txt;." analise.py
 ```
 ## Próximas modificações
 - [x] Reescrever runAnalysis utilizando pandas (29/05)
-- [ ] Adicionar export para arquivo do Pro Tunr
+- [ ] Adicionar export para arquivo do Pro Tune
 - [ ] Adicionar import de csv
 - [ ] Reset mais inteligente das cores do gráfico
 - [ ] Adicionar input manual das freqs de aquisição na interface
