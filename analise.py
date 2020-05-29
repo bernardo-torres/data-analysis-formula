@@ -32,7 +32,7 @@ def listClicked(item):
     mult = float(ui.multiplierLineEdit.text())
     offset = float(ui.offsetLineEdit.text())
     name = item.text()
-    data = bank[item.text()].data * mult + offset
+    data = df[item.text()].values * mult + offset
 
     if ui.hampelActive.isChecked():
         name = name+'_h'
@@ -57,7 +57,7 @@ def listClicked(item):
 
         dataDictionary[name] = data
 
-    ui.widget.mplPlot(bank[highFreqPack].time, data, name)
+    ui.widget.mplPlot(bank['time'],data, name)
     print(item.text())
 
 
@@ -84,8 +84,10 @@ def plotSetTitle():
 
 
 def plotSetX():
-    title = showDialog()
-    ui.widget.mplSetXLabel(title)
+    text = showDialog()
+    ui.widget.mplSetXLabel(text)
+
+
 
 
 def plotSetY():
@@ -122,10 +124,12 @@ bank = {}
 highFreqPack = 0
 NPACK = 0
 dataDictionary = {}
+daf = ['a', 'b', 'c'] # remover
+df = pd.DataFrame()
 
 
 def runAnalysis(file_path):
-    global highFreqPack, NPACK, bank, dataDictionary
+    global highFreqPack, NPACK, bank, dataDictionary, df, daf
     receivedPacks = []
     NPACK = 0
     bank = {}
@@ -159,7 +163,8 @@ def runAnalysis(file_path):
                 bank[packNo] = pacotes(packNo, dataOrder, Fs)
                 for index, x in enumerate(dataOrder, start=0):
                     # Adiciona entradas correspondentes aos dados
-                    print(x, index)
+                    #print(x, index)
+                    print("Pacote: "+str(packNo)+". Dado: "+x+". Indice: "+str(index))
                     bank[x] = dataType(packNo, index, 0, Fs)
 
                 NPACK += 1
@@ -197,7 +202,7 @@ def runAnalysis(file_path):
                 if currentPackNo in receivedPacks:
                     # Converte dados separados em splitLine para inteiros
                     try:
-                        aux = [int(x) for x in splitLine[1: len(splitLine)]]
+                        aux = [float(x) for x in splitLine[1: len(splitLine)]]
                         # Adiciona lista com valores da linha
                         bank[currentPackNo].packData.append(aux)
                     except:
@@ -206,6 +211,7 @@ def runAnalysis(file_path):
     lowFreqPack = 0
     lowestFreq = 1000
     highestFreq = 0
+
     # Varre os pacotes para achar a maior/menor frequencia e o respectivo pacote
     for pack in receivedPacks:
         if len(bank[pack].packData) != 0:
@@ -220,113 +226,59 @@ def runAnalysis(file_path):
                 highestFreq = bank[pack].Fs
                 highFreqPack = pack
 
-
-    # Indice do primeiro elemento
-    indexFirstElement = np.zeros(NPACK)
-    firstTimeVal = bank[lowFreqPack].packData[-1][0]
-    lastTimeVal = bank[lowFreqPack].packData[-1][-1]
+    # Verifica se em algum momento o tempo foi resetado
     for pack in receivedPacks:
-
         if len(bank[pack].packData) != 0:
             lastTime = bank[pack].packData[-1][0]
             resetCount = 0
             for time, i in zip(bank[pack].packData[-1], range(0, len(bank[pack].packData[-1]))):
 
                 if time < lastTime:
-                    resetCount = resetCount+1
+                    if lastTime < bank[pack].packData[-1][i+1]:
+                        print('Problema no pacote '+ str(pack) + ' no valor de tempo ' + str(time))
+                        time = lastTime + int(highestFreq/bank[pack].Fs)
+                    else:
+                        resetCount = resetCount+1
                 lastTime = time
                 time = time + resetCount*65536
                 bank[pack].packData[-1][i] = time
 
 
+    # Remove do dicionario dados que foram anunciados no txt mas nao apareceram nos dados
+    for pack in receivedPacks:
+        if len(bank[pack].packData) == 0:
+            [bank.pop(a) for a in bank[pack].dataOrder]
 
-            bank[pack].calcTimeArraySize(highestFreq)
-            # Acha em qual posição do vetor de tempo do pacote 1 esta o primeiro valor de
-            # tempo do pacote 3
-            print(pack, firstTimeVal)
-            newFirstValue = np.where(bank[pack].packData[-1] == firstTimeVal)
-            if newFirstValue[0].size > 0:
-                indexFirstElement[pack-1] =  newFirstValue[0][0]
+
+    columns = [data for pack in receivedPacks for data in bank[pack].dataOrder ]
+
+#    import time as tim
+#    start_time = tim.time()
+
+
+    # Cria dataframe com dados dos pacotes e concatena os dataframes de pacotes diferentes
+    init=False
+    for pack in receivedPacks:
+        if len(bank[pack].packData) != 0:
+            dat = pd.DataFrame(data=bank[pack].packData.T)
+            dat = dat.set_index(dat.columns[-1])
+            dat.columns = bank[pack].dataOrder
+            dat = dat.groupby(dat.index).first()
+            bank[pack].loss = len(dat.index) # Inicialmente loss contem o numero de pontos recebidos, para de cada pacote
+            if init==False:
+                init=True
+                df = dat.copy()
             else:
-                index = np.searchsorted(bank[pack].packData[-1], firstTimeVal)
-                bank[pack].packData[-1][index] = firstTimeVal
+                df = pd.concat([df, dat], axis=1, sort=False).copy()
 
 
 
-    indexFirstElement = indexFirstElement.astype(int)
+    # Subtrai de todos os indices o valor do indice 0
+    df.index = df.index - df.index[0]
 
-    for pack in receivedPacks:
-        if len(bank[pack].packData) != 0:
-            bank[pack].loss = len(bank[pack].packData[-1])/(bank[pack].idealTimeArraySize)
-            #print(str(len(bank[entry].packData[-1])) + ' ' + str(bank[entry].idealTimeArraySize))
-            print('Perda pacote ' + str(pack) + ' = ' + str(bank[pack].loss))
+#    daf[0] = df.copy()
 
-
-    # Calcula tamanho ideal para os vetores
-    idealTimeArraySize = (bank[lowFreqPack].idealTimeArraySize-1)*highestFreq/lowestFreq
-    if (idealTimeArraySize % 2) == 1:
-        idealTimeArraySize -= 1
-
-    print('Tamanho do vetor ideal = ' + str(idealTimeArraySize))
-
-
-    # Cria vetores inicializados com -20000
-    for pack in receivedPacks:
-        for i in bank[pack].dataOrder:
-            # ver isso aqui
-            bank[pack].idealTimeArraySize = int(idealTimeArraySize/(highestFreq/bank[pack].Fs))
-            bank[i].data = -20000*np.ones(bank[pack].idealTimeArraySize)
-        print(bank[pack].idealTimeArraySize)
-
-    # Cria vetores com valores de tempo, em segundos
-    for pack in receivedPacks:
-        bank[pack].createTimeVector(firstTimeVal, idealTimeArraySize, highestFreq)
-        # print(bank[entry].time)
-        print(len(bank[pack].time))
-
-    bank['time'] = bank[highFreqPack].time
-
-    # Monta vetores novos do pacote 1 e 2 no tempo ideal nas posições
-    # correspondentes. Caso não haja perda de pacotes, o resultado é um vetor
-    # igual ao original.
-    # Caso haja perda, as posições nas quais houveram perdas manterão o valor
-    # de -200
-    for pack in receivedPacks:
-        for i in range(indexFirstElement[pack-1], indexFirstElement[pack-1] + bank[pack].idealTimeArraySize):
-            if len(bank[pack].packData) != 0:
-                # Caso chegou no fim do array antes de chegar em idealTimeArraySize
-                if i == len(bank[pack].packData[-1]):
-                    break
-                delta = (bank[pack].packData[-1][i] - firstTimeVal)/(highestFreq/bank[pack].Fs)
-                delta = int(delta)
-                if delta >= bank[pack].idealTimeArraySize:
-                    break
-                pack1list = bank[pack].dataOrder
-                for entry in pack1list:
-                    currentData = bank[entry]
-                    currentData.data[delta] = bank[pack].packData[currentData.positionInPack][i]
-
-
-    #plt.plot(bank[2].time, bank['rpm'].data)
-
-
-    # Interpola se achar -20000
-    for pack in receivedPacks:
-        if bank[pack].loss != 1:
-            for dta in bank[pack].dataOrder:
-                bank[dta] = linearInterp(bank[dta], -20000, bank[pack].idealTimeArraySize)
-
-
-
-    # Interpola para colocar todos os dados na mesma base de tempo
-    for pack in receivedPacks:
-        if len(bank[pack].packData) != 0:
-            if bank[pack].Fs != highestFreq:
-                pack2list = bank[pack].dataOrder
-                for entry in pack2list:
-                    currentData = bank[entry]
-                    currentData.data = np.interp(bank['time'], bank[pack].time, currentData.data)
-
+#    print("--- %s seconds ---" % (tim.time() - start_time))
 
     # Aplica funcoes
     if ui.radioButton.isChecked():
@@ -334,20 +286,36 @@ def runAnalysis(file_path):
             aux = bank.get(i, KEY_NOT_FOUND)
             if aux != KEY_NOT_FOUND:
                 if dic1[i][0] == mult:
-                    bank[i].data = dic1[i][0](bank[i].data, dic1[i][1], dic1[i][2])
+                    df[i] = dic1[i][0](df[i].values, dic1[i][1], dic1[i][2])
                 else:
-                    bank[i].data = dic1[i][0](bank[i].data, dic1[i][1], dic1[i][2], dic1[i][3], dic1[i][4])
+                    df[i] = dic1[i][0](df[i].values, dic1[i][1], dic1[i][2], dic1[i][3], dic1[i][4])
 
-    #plt.plot(bank[1].time, bank['volPos'].data,bank['time'].data, bank['acelY'].data*100, linewidth=0.5)
+#    daf[1]= df.copy()
+
+    # Reindex coloca nulos nos indices faltantes
+    df = df.reindex(np.arange(0, df.index[-1]+1))
+
+#    daf[2] = df.copy()
+
+    # Converte para numeric
+    for col in df:
+        df[col] = pd.to_numeric(df[col], errors='coerce')
 
     offset = 0
     multiplier = 1
 
+    # Adiciona itens na lista da interface
     for i in dic1:
         aux = bank.get(i, KEY_NOT_FOUND)
         if aux != KEY_NOT_FOUND:
             ui.listWidget.addItem(i)
 
+    # Calcula perda e dispoe na interface
+    for pack in receivedPacks:
+        if len(bank[pack].packData) != 0:
+            print(bank[pack].loss, len(df.index))
+            bank[pack].loss = bank[pack].loss/len(df.index)
+            bank[pack].loss = bank[pack].loss * highestFreq/bank[pack].Fs
     if 1 in bank:
         ui.label_6.setText("Pacote 1: " + str(round(bank[1].loss*100,2)) + '%')
     if 2 in bank:
@@ -357,7 +325,15 @@ def runAnalysis(file_path):
     if 4 in bank:
         ui.label_10.setText("Pacote 4: " + str(round(bank[4].loss*100,2)) + '%')
 
-    ui.label_4.setText("Numero de pontos: " + str(int(idealTimeArraySize)))
+    # Interpola
+    df = df.interpolate(limit_direction='both')
+
+    # Vetor de tempo
+    bank['time'] = df.index/highestFreq
+
+    ui.label_4.setText("Numero de pontos: " + str(len(df.index)))
+    ui.widget.mplSetXLabel('Tempo(s)')
+
 
 # MainWindow.toolbar = NavigationToolbar(ui.widget.canvas, MainWindow, coordinates=True)
 # MainWindow.addToolBar(MainWindow.toolbar)
@@ -388,8 +364,8 @@ if __name__ == "__main__":
     ui.listWidget.itemDoubleClicked.connect(listClicked)
     ui.clearPlotButton.clicked.connect(clearPlots)  # botão para atualizar as portas seriis disponíveis
     ui.resetButton.clicked.connect(resetMultOffset)
-    #sys.exit(app.exec_())
+    sys.exit(app.exec_())
 
 
 
-sys.exit(app.exec_())
+#sys.exit(app.exec_())

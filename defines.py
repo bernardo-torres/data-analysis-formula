@@ -213,6 +213,8 @@ print('1.0')
 print('Nova interface usando Pyqt5')
 print('1.1')
 print('Conserto de bugs, exportar para csv')
+print('2.0')
+print('Uso mais extenso do pandas')
 
 print('Abrindo arquivo functions.txt')
 try:
