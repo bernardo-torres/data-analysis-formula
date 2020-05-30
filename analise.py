@@ -106,6 +106,13 @@ def exportToCSV():
     df.to_csv(fileName)
 
 
+def displayErrorMessage(text):
+    dlg = QtWidgets.QMessageBox(None)
+    dlg.setWindowTitle("Error!")
+    dlg.setIcon(QtWidgets.QMessageBox.Warning)
+    dlg.setText(
+     "<center>" + text + "<center>")
+    dlg.exec_()
 # app.setStyle("fusion")
 
 
@@ -195,7 +202,8 @@ def runAnalysis(file_path):
                 # Caso o primeiro caractere da linha seja um decimal
                 if currentLine[0].isdecimal() == 1:
                     if(NPACK == 0):
-                        print(" TXT nao possui formado esperado ")
+                        displayErrorMessage("TXT nao possui formado esperado, inserir linhas descrevendo a ordem dos dados nos pacotes")
+                        #print("TXT nao possui formado esperado")
                         return
                     # Pega o valor do primeiro caractere (ideitificador do pacote)
                     currentPackNo = int(currentLine[0])
@@ -205,9 +213,13 @@ def runAnalysis(file_path):
                         try:
                             aux = [float(x) for x in splitLine[1: len(splitLine)]]
                             # Adiciona lista com valores da linha
-                            bank[currentPackNo].packData.append(aux)
-                        except:
+
+                            if len(bank[currentPackNo].dataOrder)+1 == len(aux):
+                                bank[currentPackNo].packData.append(aux)
+                        except :
                             print('Problema na leitura da linha : '+currentLine)
+
+
         #print(dic1['volPos'])
         lowFreqPack = 0
         lowestFreq = 1000
@@ -241,6 +253,10 @@ def runAnalysis(file_path):
                             print('Problema no pacote '+ str(pack) + ' no valor de tempo ' + str(time))
                             rowsToRemove.append(i)
                             time = lastTime + int(highestFreq/bank[pack].Fs)
+                        elif bank[pack].packData[-1][i] > bank[pack].packData[-1][i-2]:
+                            print('Problema (outlier) no pacote '+ str(pack) + ' no valor de tempo ' + str(lastTime))
+                            rowsToRemove.append(i-1)
+                            #time = lastTime + int(highestFreq/bank[pack].Fs)
                         else:
                             resetCount = resetCount+1
                     lastTime = time
@@ -338,10 +354,14 @@ def runAnalysis(file_path):
 
         ui.label_4.setText("Numero de pontos: " + str(len(df.index)))
         ui.widget.mplSetXLabel('Tempo(s)')
+
+
     except Exception as ex:
         print(len(ex.args))
         print(ex.args)
         print("Não conseguiu rodar analise")
+        displayErrorMessage('Não conseguiu rodar analise')
+
 
 
 

@@ -51,6 +51,7 @@ class MPLWidget(QWidget):
 
     def mplClear(self):
         self.canvas.axes.cla()
+        self. mplSetXLabel('Tempo (s)')
         self.canvas.draw()
         self.legendList = []
         self.dicTeste.clear()
