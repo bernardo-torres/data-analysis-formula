@@ -13,7 +13,7 @@ Na versão atual, não há pré-requisitos para utilizar o executável. Para des
 
 ![print](/images/print.png)
 
-O botao *abrir* permite que o usuário escolha um .txt. Caso um log já tenha sido carregado, é possível exportar para um arquivo .csv as informacoes contidas no gráfico. Serao exportados somente os dados plotados no gráfico, com as respectivas modificacoes, caso tenham sido feitas, como adicao de offset, multiplicacao por algum valor e filtros, além de uma coluna com os valores de tempo. (22/07) É possível também exportar os dados para o formato utilizado pelo software Pro Tune Analyzer: basta utilizar a ferramenta "Exportar pro tune" do mesmo botão *abrir*, e todos os dados contidos no .txt original serao exportados (não somente os que estão plotados no gráfico, como no caso do export para .csv).
+O botao *abrir* permite que o usuário escolha um .txt. Caso um log já tenha sido carregado, é possível exportar para um arquivo .csv as informacoes contidas no gráfico. Serao exportados somente os dados plotados no gráfico, com as respectivas modificacoes, caso tenham sido feitas, como adicao de offset, multiplicacao por algum valor e filtros, além de uma coluna com os valores de tempo. (22/07) É possível também exportar os dados para o formato utilizado pelo software Pro Tune Analyzer: basta utilizar a ferramenta "Exportar pro tune" do mesmo botão *arquivo*, e todos os dados contidos no .txt original serao exportados (não somente os que estão plotados no gráfico, como no caso do export para .csv).
 
 Ao lado, o botao Figura permite que sejam adicionados nomes aos eixos e um título ao gráfico.
 
