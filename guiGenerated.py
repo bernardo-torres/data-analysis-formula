@@ -2,9 +2,10 @@
 
 # Form implementation generated from reading ui file 'dataAnalysisGui.ui'
 #
-# Created by: PyQt5 UI code generator 5.11.3
+# Created by: PyQt5 UI code generator 5.13.2
 #
 # WARNING! All changes made in this file will be lost!
+
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 from mplwidget import MPLWidget
@@ -17,23 +18,23 @@ class Ui_MainWindow(object):
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.listWidget = QtWidgets.QListWidget(self.centralwidget)
-        self.listWidget.setGeometry(QtCore.QRect(20, 110, 131, 341))
+        self.listWidget.setGeometry(QtCore.QRect(20, 110, 131, 371))
         self.listWidget.setEditTriggers(QtWidgets.QAbstractItemView.DoubleClicked)
         self.listWidget.setDragEnabled(True)
         self.listWidget.setDragDropMode(QtWidgets.QAbstractItemView.InternalMove)
         self.listWidget.setAlternatingRowColors(True)
         self.listWidget.setObjectName("listWidget")
         self.label_3 = QtWidgets.QLabel(self.centralwidget)
-        self.label_3.setGeometry(QtCore.QRect(20, 460, 141, 16))
+        self.label_3.setGeometry(QtCore.QRect(20, 490, 141, 16))
         self.label_3.setObjectName("label_3")
         self.label_4 = QtWidgets.QLabel(self.centralwidget)
-        self.label_4.setGeometry(QtCore.QRect(20, 560, 141, 16))
+        self.label_4.setGeometry(QtCore.QRect(20, 590, 141, 16))
         self.label_4.setObjectName("label_4")
         self.label_5 = QtWidgets.QLabel(self.centralwidget)
         self.label_5.setGeometry(QtCore.QRect(10, 50, 231, 16))
         self.label_5.setObjectName("label_5")
         self.label_9 = QtWidgets.QLabel(self.centralwidget)
-        self.label_9.setGeometry(QtCore.QRect(10, 70, 231, 16))
+        self.label_9.setGeometry(QtCore.QRect(10, 70, 181, 20))
         self.label_9.setObjectName("label_9")
         self.tabWidget = QtWidgets.QTabWidget(self.centralwidget)
         self.tabWidget.setGeometry(QtCore.QRect(200, 0, 871, 631))
@@ -114,22 +115,22 @@ class Ui_MainWindow(object):
         self.radioButton.setChecked(True)
         self.radioButton.setAutoExclusive(False)
         self.radioButton.setObjectName("radioButton")
-        self.widget1 = QtWidgets.QWidget(self.centralwidget)
-        self.widget1.setGeometry(QtCore.QRect(40, 480, 151, 72))
-        self.widget1.setObjectName("widget1")
-        self.verticalLayout = QtWidgets.QVBoxLayout(self.widget1)
+        self.layoutWidget = QtWidgets.QWidget(self.centralwidget)
+        self.layoutWidget.setGeometry(QtCore.QRect(20, 510, 151, 72))
+        self.layoutWidget.setObjectName("layoutWidget")
+        self.verticalLayout = QtWidgets.QVBoxLayout(self.layoutWidget)
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout.setObjectName("verticalLayout")
-        self.label_6 = QtWidgets.QLabel(self.widget1)
+        self.label_6 = QtWidgets.QLabel(self.layoutWidget)
         self.label_6.setObjectName("label_6")
         self.verticalLayout.addWidget(self.label_6)
-        self.label_7 = QtWidgets.QLabel(self.widget1)
+        self.label_7 = QtWidgets.QLabel(self.layoutWidget)
         self.label_7.setObjectName("label_7")
         self.verticalLayout.addWidget(self.label_7)
-        self.label_8 = QtWidgets.QLabel(self.widget1)
+        self.label_8 = QtWidgets.QLabel(self.layoutWidget)
         self.label_8.setObjectName("label_8")
         self.verticalLayout.addWidget(self.label_8)
-        self.label_10 = QtWidgets.QLabel(self.widget1)
+        self.label_10 = QtWidgets.QLabel(self.layoutWidget)
         self.label_10.setObjectName("label_10")
         self.verticalLayout.addWidget(self.label_10)
         MainWindow.setCentralWidget(self.centralwidget)
@@ -156,8 +157,11 @@ class Ui_MainWindow(object):
         self.actionEixo_Y.setObjectName("actionEixo_Y")
         self.actionExportar_para_CSV = QtWidgets.QAction(MainWindow)
         self.actionExportar_para_CSV.setObjectName("actionExportar_para_CSV")
+        self.actionExportar_Txt_Pro_Tune = QtWidgets.QAction(MainWindow)
+        self.actionExportar_Txt_Pro_Tune.setObjectName("actionExportar_Txt_Pro_Tune")
         self.menuFile.addAction(self.actionOpenFile)
         self.menuFile.addAction(self.actionExportar_para_CSV)
+        self.menuFile.addAction(self.actionExportar_Txt_Pro_Tune)
         self.menuFigure.addAction(self.actionTitulo)
         self.menuFigure.addAction(self.actionEixo_X)
         self.menuFigure.addAction(self.actionEixo_Y)
@@ -174,7 +178,7 @@ class Ui_MainWindow(object):
         self.label_3.setText(_translate("MainWindow", "Pacotes recebidos: "))
         self.label_4.setText(_translate("MainWindow", "Número de pontos:"))
         self.label_5.setText(_translate("MainWindow", "Clique duas vezes para plotar"))
-        self.label_9.setText(_translate("MainWindow", "uas vezes novamente para remover"))
+        self.label_9.setText(_translate("MainWindow", "duas vezes novamente para remover"))
         self.resetButton.setText(_translate("MainWindow", "Reset"))
         self.label.setText(_translate("MainWindow", "Multiplicador"))
         self.multiplierLineEdit.setText(_translate("MainWindow", "1"))
@@ -257,6 +261,7 @@ class Ui_MainWindow(object):
         self.actionEixo_X.setText(_translate("MainWindow", "Eixo X"))
         self.actionEixo_Y.setText(_translate("MainWindow", "Eixo Y"))
         self.actionExportar_para_CSV.setText(_translate("MainWindow", "Exportar para CSV"))
+        self.actionExportar_Txt_Pro_Tune.setText(_translate("MainWindow", "Exportar Pro Tune"))
 
 
 if __name__ == "__main__":

@@ -106,6 +106,34 @@ def exportToCSV():
     df.to_csv(fileName)
 
 
+def exportProTune():
+    global bank, dataDictionary, df
+    fileName, _ = QtWidgets.QFileDialog.getSaveFileName(MainWindow, "Escolha pasta e nome do arquivo dlf",
+                                                        "", 'dlf(*.dlf)')
+    dataNames = ""
+    for name in df.columns:
+        dataNames = dataNames + name + ";"
+
+    units="seg.;"
+    for name in df.columns:
+        units = units + dic1[name][-1] + ";"
+
+    text = ("#V2\n"
+    "#DATASTART\n"
+    "Datalog Time;") + dataNames + "\n" + units + "\n"
+    print(text)
+    df2 = df.copy()
+    df2.index = bank['time']
+    dataText = df2.to_csv(header=False, sep="A")
+    #dataText = dataText.replace("  ", "A")
+#    dataText = dataText.replace(" ", "A")
+
+    text = text+dataText
+    print(fileName)
+    with open(fileName, "w") as text_file:
+        text_file.write(text)
+
+
 def displayErrorMessage(text):
     dlg = QtWidgets.QMessageBox(None)
     dlg.setWindowTitle("Error!")
@@ -133,6 +161,7 @@ NPACK = 0
 dataDictionary = {}
 daf = ['a', 'b', 'c'] # remover
 df = pd.DataFrame()
+
 
 
 def runAnalysis(file_path):
@@ -163,7 +192,14 @@ def runAnalysis(file_path):
                 # Campo dados no formado "PACOTEX YHz dado1 dado2..."
                 if currentLine[0:6] == 'PACOTE':
                     packNo = int(currentLine[6])
-                    Fs = float(splitLine[1])
+                    try:
+                        Fs = float(splitLine[1])
+                    except Exception as ex:
+                        print(len(ex.args))
+                        print(ex.args)
+                        print("Não conseguiu rodar analise, problema nas taxas de amostragem dos pacotes")
+                        displayErrorMessage('Não conseguiu rodar analise, problema nas taxas de amostragem dos pacotes')
+
                     dataOrder = splitLine[2:-1]
                     # Adiciona entrada DADOSPX no dicionario
                     # contendo a linha com a informacao dos dados
@@ -301,11 +337,13 @@ def runAnalysis(file_path):
 
     #    print("--- %s seconds ---" % (tim.time() - start_time))
 
+
         # Aplica funcoes
         if ui.radioButton.isChecked():
             for i in dic1:
                 aux = bank.get(i, KEY_NOT_FOUND)
                 if aux != KEY_NOT_FOUND:
+                    print(i)
                     if dic1[i][0] == mult:
                         df[i] = dic1[i][0](df[i].values, dic1[i][1], dic1[i][2])
                     else:
@@ -384,13 +422,14 @@ if __name__ == "__main__":
     ui = Ui_MainWindow()
     ui.setupUi(MainWindow)
     MainWindow.show()
-    #app.exec_()
+#    app.exec_()
 
     ui.actionOpenFile.triggered.connect(selectFile)
     ui.actionTitulo.triggered.connect(plotSetTitle)
     ui.actionEixo_X.triggered.connect(plotSetX)
     ui.actionEixo_Y.triggered.connect(plotSetY)
     ui.actionExportar_para_CSV.triggered.connect(exportToCSV)
+    ui.actionExportar_Txt_Pro_Tune.triggered.connect(exportProTune)
     ui.listWidget.itemDoubleClicked.connect(listClicked)
     ui.clearPlotButton.clicked.connect(clearPlots)  # botão para atualizar as portas seriis disponíveis
     ui.resetButton.clicked.connect(resetMultOffset)

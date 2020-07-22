@@ -13,7 +13,9 @@ Na versão atual, não há pré-requisitos para utilizar o executável. Para des
 
 ![print](/images/print.png)
 
-O botao *abrir* permite que o usuário escolha um .txt. Caso um log já tenha sido carregado, é possível exportar para um arquivo .csv as informacoes contidas no gráfico. Serao exportados somente os dados plotados no gráfico, com as respectivas modificacoes, caso tenham sido feitas, como adicao de offset, multiplicacao por algum valor e filtros, além de uma coluna com os valores de tempo. Ao lado, o botao Figura permite que sejam adicionados nomes aos eixos e um título ao gráfico.
+O botao *abrir* permite que o usuário escolha um .txt. Caso um log já tenha sido carregado, é possível exportar para um arquivo .csv as informacoes contidas no gráfico. Serao exportados somente os dados plotados no gráfico, com as respectivas modificacoes, caso tenham sido feitas, como adicao de offset, multiplicacao por algum valor e filtros, além de uma coluna com os valores de tempo. (22/07) É possível também exportar os dados para o formato utilizado pelo software Pro Tune Analyzer: basta utilizar a ferramenta "Exportar pro tune" do mesmo botão *abrir*, e todos os dados contidos no .txt original serao exportados (não somente os que estão plotados no gráfico, como no caso do export para .csv).
+
+Ao lado, o botao Figura permite que sejam adicionados nomes aos eixos e um título ao gráfico.
 
 O botao aplicar funções permite que o usuário escolha, ao abrir um arquivo, se serao aplicadas as funcoes de calibracao ou se os dados serao mostrados na forma como foram enviados pelo carro.
 
@@ -70,14 +72,14 @@ As funcoes de calibracao podem ser modificadas pelo usuário. A configuracao dos
 
 O arquivo possui o formato:
 ```
-acelX mult 0.0000610351 0
-acelY mult 0.0000610351 0
-acelZ mult 0.0000610351 0
-velT mult 1 0
-sparkCut mult 1 0
-suspPos lin 5000 0 240 120
-oleoP mult 0.001 0
-fuelP mult 0.001 0
+acelX mult 0.0000610351 0 g
+acelY mult 0.0000610351 0 g
+acelZ mult 0.0000610351 0 g
+velT mult 1 0 km/h
+sparkCut mult 1 0 -
+suspPos lin 5000 0 240 120 -
+oleoP mult 0.001 0 bar
+fuelP mult 0.001 0 bar
 ```
 Na primeira coluna temos o nome da variável, que tem que ser o mesmo nome colocado no .txt da entrada para que ela possa ser mostrada no gráfico em sua escala correta. Considerando o arquivo de configuracao de exemplo acima, se no .txt de entrada há a seguinte linha:
 ```
@@ -89,7 +91,7 @@ Para modificar, basta editar o valor desejado (ou inserir uma linha) e salvar o 
 
 A segunda coluna pode conter dois valores: **mult** ou **lin**. Uma linha com **mult**, na forma:
 ```
-nomeDoDado mult A B
+nomeDoDado mult A B unidade
 ```
 Terá sua funcao na forma:
 ```
@@ -99,13 +101,13 @@ Ou seja, o primeiro numero (A) é o multiplicador e (B) o offset.
 
 Uma linha com **lin**, na forma:
 ```
-nomeDoDado lin max min range offset
+nomeDoDado lin max min range offset unidade
 ```
 Terá sua funcao na forma:
 ```
 Valor na escala correta =  (valor gravado - MAX) * range/(MAX-MIN) - offset
 ```
-
+A última coluna sempre contém a unidade de engenharia do dado. Se não houver unidade, colocar um hífen (-)
 ## Desenvolvimento
 ### Dependencias
 Dependencias para desenvolvimento
@@ -126,7 +128,7 @@ O pyqt5-tools instala também o Qt Designer, ferramenta utilizada para criar o v
 Para modificar algo na interface, altere o arquivo interface.ui, salve, e execute o seguinte comando:
 
 ```
-pyuic5 -x interface.ui -o interface_generated.py
+pyuic5 -x dataAnalysisGui.ui -o guiGenerated.py
 ```
 
 Após executar o comando, procure a linha <from pyqtgraph import PlotWidget>, no arquivo interface_generated.py,
@@ -140,7 +142,7 @@ pyinstaller --add-data "functions.txt;." analise.py
 ```
 ## Próximas modificações
 - [x] Reescrever runAnalysis utilizando pandas (29/05)
-- [ ] Adicionar export para arquivo do Pro Tune
+- [X] Adicionar export para arquivo do Pro Tune (22/07)
 - [ ] Adicionar import de csv
 - [ ] Reset mais inteligente das cores do gráfico
 - [ ] Adicionar input manual das freqs de aquisição na interface

@@ -198,7 +198,7 @@ baseString = 'ind acelX acelY acelZ velDD velT sparkCut suspPos time'
 baseString += ' oleoP fuelP tps rearBrakeP frontBrakeP volPos beacon correnteBat'
 baseString += ' ect batVoltage releBomba releVent pduTemp tempDiscoD tempDiscoE'
 
-print('Versão atual ----  1.1 ---- 11/19')
+print('Versão atual ---- 07/2020')
 print('Ultimas Mudancas:')
 print('beta 0.2 -- 31/05')
 print('Clique no grafico para exibir os valores de um ponto especifico')
@@ -221,15 +221,31 @@ try:
     with open('functions.txt', 'r') as document:
         dic1 = {}
         for line in document:
+            #print(line)
             line = line.split()
             if not line:  # empty line?
                 continue
-            for i in range(2, len(line)):
-                line[i] = float(line[i])
             if line[1] == 'mult':
+                if len(line) != 5:
+                    if len(line) == 4:
+                        line.append("-")
+                        print("functions.txt faltando unidade na linha " + line[0])
+                    else:
+                        print(line)
+                        line = ['mult', 1, 0, '-']
+                        print("functions.txt incorreto na linha " + line[0])
                 line[1] = mult
             elif line[1] == 'lin':
+                if len(line) != 7:
+                    if len(line) == 6:
+                        line.append("-")
+                        print("functions.txt faltando unidade na linha " + line[0])
+                    else:
+                        print("functions.txt incorreto na linha " + line[0])
                 line[1] = lin
+            for i in range(2, len(line)-1):
+                line[i] = float(line[i])
             dic1[line[0]] = line[1:]
 except:
     print('Falha ao abrir functions.txt')
+
