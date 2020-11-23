@@ -1,4 +1,7 @@
 # Data Analysis Formula UFMG
+## Objetivo
+O objetivo desse projeto é fornecer uma ferramenta para a análise dos dados coletados pela equipe Formula SAE UFMG. O programa surge inicialmente como uma ferramenta de transição, permitindo que o usuário importe os logs gravados durante uma sessão de testes e aplique correções e análises preliminares nos dados. É possível exportar esse resultado para um arquivo .csv e também para o formato .dlf, utilizado por exemplo pelo software Pro Tune Analyzer. O usuário consegue também aplicar filtros e visualizar o resultado, assim como o sinal original.
+
 ## Como utilizar
 ### Arquivos
 
